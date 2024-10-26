@@ -1,9 +1,33 @@
-export class DriverDisplay {
-  ctx: CanvasRenderingContext2D;
+import { Vector } from "./lib/vector.ts";
 
-  constructor(ctx: CanvasRenderingContext2D) {
+export interface ISpritePrinter<SpriteType> {
+  drawSpriteType(
+    ctx: CanvasRenderingContext2D,
+    pos: Vector,
+    type: SpriteType,
+  ): void;
+}
+
+export interface Layer {
+  render(ctx: CanvasRenderingContext2D): void;
+}
+
+export interface LayerSprite<T> extends Layer {
+  spritePrinter: ISpritePrinter<T> | null;
+}
+
+export class DriverDisplay<SpriteType> {
+  ctx: CanvasRenderingContext2D;
+  spritePrinter: ISpritePrinter<SpriteType>;
+  layers: Layer[] = [];
+
+  constructor(
+    ctx: CanvasRenderingContext2D,
+    spritePrinter: ISpritePrinter<SpriteType>,
+  ) {
     this.ctx = ctx;
     this.initResizeHandling();
+    this.spritePrinter = spritePrinter;
   }
 
   public draw() {
@@ -11,6 +35,15 @@ export class DriverDisplay {
     requestAnimationFrame(() => {
       this.draw();
     });
+  }
+
+  public addLayer(layer: Layer) {
+    this.layers.push(layer);
+  }
+
+  public addSpriteLayer(layer: LayerSprite<SpriteType>) {
+    layer.spritePrinter = this.spritePrinter;
+    this.layers.push(layer);
   }
 
   private initResizeHandling(): void {
@@ -34,14 +67,8 @@ export class DriverDisplay {
   }
 
   private drawContent() {
-    this.ctx.fillStyle = "yellow";
-    this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-    this.ctx.fillStyle = "blue";
-    this.ctx.fillRect(
-      10,
-      10,
-      this.ctx.canvas.width - 20,
-      this.ctx.canvas.height - 20,
-    );
+    this.layers.forEach((layer) => {
+      layer.render(this.ctx);
+    });
   }
 }

@@ -8,7 +8,7 @@ export type AudioItem<Stream, StreamFile> = {
 export type StreamItem = {
   fileName: string;
   buffer?: AudioBuffer;
-}
+};
 
 export interface AudioAssetSet<Stream, StreamType, StreamFile> {
   files: Map<StreamFile, StreamItem>;
@@ -53,7 +53,7 @@ export class DriverAudio<Stream, StreamType, StreamFile> {
         if (v.buffer === undefined) {
           v.buffer = await this.loadAndDecodeAudio(v.fileName);
         }
-      })
+      }),
     );
     this.initialized = true;
   }
@@ -69,7 +69,7 @@ export class DriverAudio<Stream, StreamType, StreamFile> {
   }
 
   loadAndDecodeAudio = async (
-    fileUrl: string
+    fileUrl: string,
   ): Promise<AudioBuffer> => {
     const file = await fetch(fileUrl);
     const buffer = await file.arrayBuffer();
