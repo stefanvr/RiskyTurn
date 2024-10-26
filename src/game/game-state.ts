@@ -1,4 +1,5 @@
 import type { FieldType } from "./game-elements.ts";
+import { GameRules } from "./game-rules.ts";
 
 export enum GamePhase {
   placing,
@@ -31,6 +32,7 @@ export type MapStatus = {
 };
 
 export type GameState = {
+  rules: GameRules;
   gameStatus: GameStatus;
   playersStatus: PlayersStatus;
   mapStatus: MapStatus;

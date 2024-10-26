@@ -5,7 +5,7 @@ import { assertEquals } from "@std/assert/equals";
 import { minimalGame } from "./test-game-states.ts";
 
 describe("processGameTurn (valid actions)", () => {
-  describe("PlaceUnit", () => {
+  describe("Starting game", () => {
     const outState = processGameTurn(minimalGame, []);
 
     it("Status change from placing to playing", () => {
@@ -13,7 +13,7 @@ describe("processGameTurn (valid actions)", () => {
     });
   });
 
-  describe("PlaceUnit", () => {
+  describe("Finish game", () => {
     const inState = structuredClone(minimalGame);
     inState.mapStatus.fields[0][1].playerId = 1;
     const outState = processGameTurn(inState, []);

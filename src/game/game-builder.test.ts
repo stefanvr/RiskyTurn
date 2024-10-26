@@ -4,6 +4,7 @@ import { GameBuilder } from "./game-builder.ts";
 import { GamePhase, type MapStatus } from "./game-state.ts";
 import { FieldType } from "./game-elements.ts";
 import { MinimaGameConfig } from "./test-game-states.ts";
+import { defaultRules } from "./game-rules.ts";
 
 const MinimalMapStatus: MapStatus = {
   fields: [[
@@ -36,5 +37,9 @@ describe("GameBuilder", () => {
   it("Player stats are initialized correctly", () => {
     assertEquals(game.playersStatus[1].mapDomination, 50);
     assertEquals(game.playersStatus[2].mapDomination, 0);
+  });
+
+  it("Game has rule set", () => {
+    assertEquals(game.rules, defaultRules);
   });
 });

@@ -7,10 +7,12 @@ import {
   type PlayersStatus,
 } from "./game-state.ts";
 import { updatePlayerStats } from "./game-turn-update-stats.ts";
+import { defaultRules } from "./game-rules.ts";
 
 export class GameBuilder {
   public createGame(config: GameConfig): GameState {
     const gs: GameState = {
+      rules: defaultRules,
       gameStatus: { phase: GamePhase.placing },
       playersStatus: this.createPlayerState(config.players),
       mapStatus: this.createMapStatus(config.mapConfig),

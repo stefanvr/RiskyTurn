@@ -39,7 +39,7 @@ parts of the app.
 
 ## Game (functional)
 
-- [ ] Dead tiles
+- [x] Dead tiles
   - Handle none, sea / rock
   - Handle domination
 - [ ] Income
