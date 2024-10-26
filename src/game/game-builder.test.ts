@@ -1,9 +1,11 @@
 import { assertEquals } from "jsr:@std/assert";
 import { GameBuilder } from "./game-builder.ts";
 import { GamePhase } from "./game-state.ts";
+import { defaultPlayerConfig } from "./game-config.ts";
 
 Deno.test("GameBuilder: Create game, game in placing phase", () => {
   const g = new GameBuilder();
-  const game = g.createGame({});
+  const game = g.createGame({ players: defaultPlayerConfig });
   assertEquals(game.gameStatus, { phase: GamePhase.placing });
+  assertEquals(Object.entries(game.playersStatus).length, 2);
 });
