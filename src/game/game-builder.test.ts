@@ -32,14 +32,9 @@ describe("GameBuilder", () => {
   it("Converts mapConfig to mapStatus correctly", () => {
     assertEquals(game.mapStatus, MinimalMapStatus);
   });
+
+  it("Player stats are initialized correctly", () => {
+    assertEquals(game.playersStatus[1].mapDomination, 50);
+    assertEquals(game.playersStatus[2].mapDomination, 0);
+  });
 });
-/*
-Deno.test("GameBuilder: Create game, game in placing phase", () => {
-  const g = new GameBuilder();
-
-  const game = g.createGame(MinimaGameConfig);
-
-  assertEquals(game.gameStatus, { phase: GamePhase.placing });
-  assertEquals(Object.entries(game.playersStatus).length, 2);
-  assertEquals(game.mapStatus, MinimalMapStatus);
-});*/

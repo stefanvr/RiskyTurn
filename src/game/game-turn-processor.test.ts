@@ -12,4 +12,15 @@ describe("processGameTurn (valid actions)", () => {
       assertEquals(outState.gameStatus.phase, GamePhase.playing);
     });
   });
+
+  describe("PlaceUnit", () => {
+    const inState = structuredClone(minimalGame);
+    inState.mapStatus.fields[0][1].playerId = 1;
+    const outState = processGameTurn(inState, []);
+
+    it("Player stats reflect new state", () => {
+      assertEquals(outState.playersStatus[1].mapDomination, 100);
+      assertEquals(outState.playersStatus[2].mapDomination, 0);
+    });
+  });
 });

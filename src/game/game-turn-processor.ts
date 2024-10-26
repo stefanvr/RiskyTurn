@@ -2,6 +2,7 @@ import { GamePhase, GameState } from "./game-state.ts";
 import { PlayerActionType, TurnActions } from "./game-actions.ts";
 import { validateGameTurn } from "./game-turn-action-validator.ts";
 import { applyGameMove } from "./game-turn-move.ts";
+import { updatePlayerStats } from "./game-turn-update-stats.ts";
 
 export function processGameTurn(
   beginState: GameState,
@@ -17,6 +18,8 @@ export function processGameTurn(
     endState,
     actions.filter((a) => a.type === PlayerActionType.Attack),
   );
+  updatePlayerStats(endState);
+
   endState.gameStatus.phase = GamePhase.playing;
   return endState;
 }

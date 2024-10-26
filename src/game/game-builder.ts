@@ -6,14 +6,17 @@ import {
   MapStatus,
   type PlayersStatus,
 } from "./game-state.ts";
+import { updatePlayerStats } from "./game-turn-update-stats.ts";
 
 export class GameBuilder {
   public createGame(config: GameConfig): GameState {
-    return {
+    const gs: GameState = {
       gameStatus: { phase: GamePhase.placing },
       playersStatus: this.createPlayerState(config.players),
       mapStatus: this.createMapStatus(config.mapConfig),
     };
+    updatePlayerStats(gs);
+    return gs;
   }
 
   createPlayerState(players: Player[]): PlayersStatus {
@@ -22,6 +25,7 @@ export class GameBuilder {
       ps[player.id] = {
         playerId: player.id,
         placeableUnits: 2,
+        mapDomination: 0,
       };
     });
 
