@@ -9,7 +9,7 @@ import {
 } from "./audio/audio-config.ts";
 import { SPRITE_SET, SpriteFile, SpriteType } from "./display/sprite-config.ts";
 import { SpritePrinter } from "./display/sprite-printer.ts";
-import { DemoLayer } from "./game-ui/demo-layer.ts";
+import { GameAppFlow } from "./game-ui/game-app-flow.ts";
 
 export class App {
   canvas: HTMLCanvasElement;
@@ -21,6 +21,8 @@ export class App {
   input: DriverInput;
   audio: DriverAudio<SOUND, STREAM_TYPE, SOUND_FILE>;
 
+  gameAppFlow: GameAppFlow;
+
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -30,16 +32,15 @@ export class App {
     this.display = new DriverDisplay(this.ctx, this.spritePrinter);
     this.input = new DriverInput(this.canvas);
     this.audio = new DriverAudio<SOUND, STREAM_TYPE, SOUND_FILE>(SFX_SET);
+
+    this.gameAppFlow = new GameAppFlow(this.display, this.audio);
   }
 
   public async start() {
     this.spritePrinter.loadSprites();
-
-    this.display.addSpriteLayer(new DemoLayer()); // demo
+    this.gameAppFlow.start();
 
     this.display.draw();
     await this.audio.loadAudio();
-
-    this.audio.playSoundEffect(SOUND.Open); // demo
   }
 }

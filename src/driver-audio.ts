@@ -31,7 +31,12 @@ export const createItem = <Stream, StreamFile>(
   stop,
 });
 
-export class DriverAudio<Stream, StreamType, StreamFile> {
+export interface IDriverAudio<Stream> {
+  playSoundEffect(sound: Stream): boolean;
+}
+
+export class DriverAudio<Stream, StreamType, StreamFile>
+  implements IDriverAudio<Stream> {
   audioCtx: AudioContext = new AudioContext();
   gainMain: GainNode;
   initialized: boolean = false;
@@ -76,7 +81,7 @@ export class DriverAudio<Stream, StreamType, StreamFile> {
     return this.audioCtx.decodeAudioData(buffer);
   };
 
-  public playSoundEffect(sound: Stream) {
+  public playSoundEffect(sound: Stream): boolean {
     if (!this.initialized) {
       return false;
     }
