@@ -1,9 +1,7 @@
 import { GamePhase, GameState } from "./game-state.ts";
-import {
-  type PlayerAction,
-  PlayerActionType,
-  TurnActions,
-} from "./game-actions.ts";
+import { PlayerActionType, TurnActions } from "./game-actions.ts";
+import { validateGameTurn } from "./game-turn-action-validator.ts";
+import { applyGameMove } from "./game-turn-move.ts";
 
 export function processGameTurn(
   beginState: GameState,
@@ -12,27 +10,17 @@ export function processGameTurn(
   const endState = structuredClone(beginState);
 
   actions.forEach((action) => {
-    applyAction(endState, action);
+    validateGameTurn(endState, action);
+    applyGameMove(endState, action);
   });
-
+  resolveBattle(
+    endState,
+    actions.filter((a) => a.type === PlayerActionType.Attack),
+  );
   endState.gameStatus.phase = GamePhase.playing;
   return endState;
 }
 
-function applyAction(state: GameState, action: PlayerAction) {
-  switch (action.type) {
-    case PlayerActionType.Pass: {
-      return;
-    }
-    case PlayerActionType.PlaceUnits: {
-      state.playersStatus[action.playerId].placeableUnits -=
-        action.unitPlacement.units;
-      const f = state.mapStatus
-        .fields[action.unitPlacement.targetField.y][
-          action.unitPlacement.targetField.x
-        ];
-      f.units += action.unitPlacement.units;
-      return;
-    }
-  }
+function resolveBattle(state: GameState, actions: TurnActions) {
+  if (state && actions.length > 0) return true;
 }
