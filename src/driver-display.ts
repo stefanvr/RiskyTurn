@@ -9,6 +9,8 @@ export interface ISpritePrinter<SpriteType> {
 }
 
 export interface Layer {
+  tag: string;
+
   render(ctx: CanvasRenderingContext2D): void;
 }
 

@@ -2,7 +2,7 @@ import { SpriteType } from "../display/sprite-config.ts";
 import { SOUND } from "../audio/audio-config.ts";
 import { DriverDisplay } from "../driver-display.ts";
 import { IDriverAudio } from "../driver-audio.ts";
-import { DemoLayer } from "./demo-layer.ts";
+import { LayerBackground } from "./layer-background.ts";
 
 export class GameAppFlow {
   display: DriverDisplay<SpriteType>;
@@ -14,7 +14,6 @@ export class GameAppFlow {
   }
 
   public start() {
-    this.display.addSpriteLayer(new DemoLayer()); // demo
-    this.audio.playSoundEffect(SOUND.Open); // demo
+    this.display.addLayer(new LayerBackground());
   }
 }
