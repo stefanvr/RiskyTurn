@@ -39,6 +39,11 @@ describe("GameBuilder", () => {
     assertEquals(game.playersStatus[2].mapDomination, 0);
   });
 
+  it("Player money balance is zero", () => {
+    assertEquals(game.playersStatus[1].money, 0);
+    assertEquals(game.playersStatus[2].money, 0);
+  });
+
   it("Game has rule set", () => {
     assertEquals(game.rules, defaultRules);
   });

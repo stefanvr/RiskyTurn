@@ -42,7 +42,7 @@ parts of the app.
 - [x] Dead tiles
   - Handle none, sea / rock
   - Handle domination
-- [ ] Income
+- [x] Income
   - Turn
   - Additional owned
 - Other (buy) actions

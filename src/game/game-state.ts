@@ -14,6 +14,7 @@ export type GameStatus = {
 export type PlayerStatus = {
   playerId: number;
   placeableUnits: number;
+  money: number;
   mapDomination: number;
 };
 

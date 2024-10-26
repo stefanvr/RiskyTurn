@@ -6,7 +6,8 @@ import { minimalGame } from "./test-game-states.ts";
 
 describe("processGameTurn (valid actions)", () => {
   describe("Starting game", () => {
-    const outState = processGameTurn(minimalGame, []);
+    const inState = structuredClone(minimalGame);
+    const outState = processGameTurn(inState, []);
 
     it("Status change from placing to playing", () => {
       assertEquals(outState.gameStatus.phase, GamePhase.playing);
@@ -25,6 +26,11 @@ describe("processGameTurn (valid actions)", () => {
     it("Player stats reflect new state", () => {
       assertEquals(outState.playersStatus[1].mapDomination, 100);
       assertEquals(outState.playersStatus[2].mapDomination, 0);
+    });
+
+    it("Player receives income", () => {
+      assertEquals(outState.playersStatus[1].money, 3);
+      assertEquals(outState.playersStatus[2].money, 0);
     });
   });
 });

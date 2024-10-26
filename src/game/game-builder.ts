@@ -27,6 +27,7 @@ export class GameBuilder {
       ps[player.id] = {
         playerId: player.id,
         placeableUnits: 2,
+        money: 0,
         mapDomination: 0,
       };
     });

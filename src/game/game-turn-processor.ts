@@ -3,6 +3,7 @@ import { PlayerActionType, TurnActions } from "./game-actions.ts";
 import { validateGameTurn } from "./game-turn-action-validator.ts";
 import { applyGameMove } from "./game-turn-move.ts";
 import { updatePlayerStats } from "./game-turn-update-stats.ts";
+import { updatePlayerIncome } from "./game-turn-update-income.ts";
 
 export function processGameTurn(
   beginState: GameState,
@@ -18,6 +19,7 @@ export function processGameTurn(
     endState,
     actions.filter((a) => a.type === PlayerActionType.Attack),
   );
+  updatePlayerIncome(endState);
   updatePlayerStats(endState);
 
   endState.gameStatus.phase = hasPlayerWon(endState)
