@@ -2,6 +2,7 @@ import type { FieldType } from "./game-elements.ts";
 
 export enum GamePhase {
   placing,
+  playing,
 }
 
 export type GameStatus = {
