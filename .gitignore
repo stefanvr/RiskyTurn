@@ -1,1 +1,6 @@
 .idea
+.vite
+
+node_modules
+raw/
+dist/
