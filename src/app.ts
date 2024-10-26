@@ -7,17 +7,18 @@ import {
   SOUND_FILE,
   STREAM_TYPE,
 } from "./audio/audio-config.ts";
-import { SPRITE_SET, SpriteFile, SpriteType } from "./display/sprite-config.ts";
+import { SPRITE_SET, SpriteFile } from "./display/sprite-config.ts";
 import { SpritePrinter } from "./display/sprite-printer.ts";
 import { GameAppFlow } from "./game-ui/game-app-flow.ts";
+import { FieldType } from "./game/game-elements.ts";
 
 export class App {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
 
-  spritePrinter: SpritePrinter<SpriteType, SpriteFile>;
+  spritePrinter: SpritePrinter<FieldType, SpriteFile>;
 
-  display: DriverDisplay<SpriteType>;
+  display: DriverDisplay<FieldType>;
   input: DriverInput;
   audio: DriverAudio<SOUND, STREAM_TYPE, SOUND_FILE>;
 
