@@ -18,6 +18,10 @@ describe("processGameTurn (valid actions)", () => {
     inState.mapStatus.fields[0][1].playerId = 1;
     const outState = processGameTurn(inState, []);
 
+    it("Status change from placing to finished", () => {
+      assertEquals(outState.gameStatus.phase, GamePhase.finished);
+    });
+
     it("Player stats reflect new state", () => {
       assertEquals(outState.playersStatus[1].mapDomination, 100);
       assertEquals(outState.playersStatus[2].mapDomination, 0);

@@ -3,6 +3,7 @@ import type { FieldType } from "./game-elements.ts";
 export enum GamePhase {
   placing,
   playing,
+  finished,
 }
 
 export type GameStatus = {
@@ -12,6 +13,7 @@ export type GameStatus = {
 export type PlayerStatus = {
   playerId: number;
   placeableUnits: number;
+  mapDomination: number;
 };
 
 export type PlayersStatus = {

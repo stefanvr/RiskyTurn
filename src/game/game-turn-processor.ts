@@ -20,8 +20,16 @@ export function processGameTurn(
   );
   updatePlayerStats(endState);
 
-  endState.gameStatus.phase = GamePhase.playing;
+  endState.gameStatus.phase = hasPlayerWon(endState)
+    ? GamePhase.finished
+    : GamePhase.playing;
   return endState;
+}
+
+function hasPlayerWon(state: GameState) {
+  return Object.values(state.playersStatus).filter((ps) =>
+    ps.mapDomination === 100
+  ).length > 0;
 }
 
 function resolveBattle(state: GameState, actions: TurnActions) {
