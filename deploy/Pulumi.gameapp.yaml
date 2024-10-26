@@ -1,0 +1,4 @@
+config:
+  svrinc-corp-gameapp:domain: svrinc.net
+  svrinc-corp-gameapp:subDomain: trazer
+  svrinc-corp-gameapp:application: risky

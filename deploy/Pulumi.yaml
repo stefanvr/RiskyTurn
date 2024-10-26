@@ -1,0 +1,7 @@
+name: svrinc-corp-gameapp
+runtime: nodejs
+description: deploy risky turn weapp
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript

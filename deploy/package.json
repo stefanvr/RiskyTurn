@@ -1,0 +1,17 @@
+{
+  "name": "deploy",
+  "main": "index.ts",
+  "scripts": {
+    "init": "pulumi stack init gameapp",
+    "game-app": "pulumi stack select gameapp && pulumi up --yes"
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^6.0.0",
+    "@pulumi/awsx": "^2.0.2",
+    "@pulumi/pulumi": "^3.113.0"
+  }
+}
