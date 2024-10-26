@@ -1,8 +1,8 @@
 import { describe, it } from "jsr:@std/testing/bdd";
-import { FieldType } from "./game-elements.ts";
+import { FieldType } from "../game-elements.ts";
 import { assertEquals } from "@std/assert/equals";
-import { updatePlayerStats } from "./game-turn-update-stats.ts";
-import { minimalGame } from "./test-game-states.ts";
+import { updatePlayerStats } from "./game-turn-update-player-stats.ts";
+import { minimalGame } from "../test-game-states.ts";
 
 describe("updatePlayerStats - calcDomination", () => {
   const PlayerId = 1;

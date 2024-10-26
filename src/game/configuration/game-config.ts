@@ -1,4 +1,4 @@
-import { FieldType } from "./game-elements.ts";
+import { FieldType } from "../game-elements.ts";
 
 export type Player = {
   id: number;

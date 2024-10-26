@@ -1,11 +1,11 @@
 import { describe, it } from "jsr:@std/testing/bdd";
 import { assertEquals } from "@std/assert/equals";
-import { PlayerAction, PlayerActionType } from "./game-actions.ts";
-import { Vector } from "../lib/vector.ts";
-import { minimalGame } from "./test-game-states.ts";
-import { applyGameMove } from "./game-turn-move.ts";
+import { PlayerAction, PlayerActionType } from "../interaction/game-actions.ts";
+import { Vector } from "../../lib/vector.ts";
+import { minimalGame } from "../test-game-states.ts";
+import { playGameTurnAction } from "./game-turn-play-action.ts";
 
-describe("applyGameMove (valid actions)", () => {
+describe("playGameTurnAction (valid actions)", () => {
   describe("PlaceUnit", () => {
     const inState = structuredClone(minimalGame);
     const action: PlayerAction = {
@@ -16,7 +16,7 @@ describe("applyGameMove (valid actions)", () => {
         units: 2,
       },
     };
-    const outState = applyGameMove(inState, action);
+    const outState = playGameTurnAction(inState, action);
 
     it("Unit placed on assigned field", () => {
       assertEquals(outState.mapStatus.fields[0][1].units, 2);

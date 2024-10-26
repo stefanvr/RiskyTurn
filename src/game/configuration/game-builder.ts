@@ -5,8 +5,8 @@ import {
   GameState,
   MapStatus,
   type PlayersStatus,
-} from "./game-state.ts";
-import { updatePlayerStats } from "./game-turn-update-stats.ts";
+} from "../game-state.ts";
+import { updatePlayerStats } from "../turn/game-turn-update-player-stats.ts";
 import { defaultRules } from "./game-rules.ts";
 
 export class GameBuilder {

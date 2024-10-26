@@ -42,7 +42,7 @@ Defence advantage: 1 hit point per unit, not kept if not lost during battle
 - Get income
 - Get units build (including from conquered field)
 
-#### 2. Buy actions
+#### 2. Purchase actions
 
 - Build unit
 - Set defense mode for field
@@ -54,7 +54,7 @@ Defence advantage: 1 hit point per unit, not kept if not lost during battle
 
 No limit on units to move, but only to adjacent field.
 
-#### 4. Attack actions
+#### 4. Battle actions
 
 - Decide number of units to attack from an owned field
 - Set target field

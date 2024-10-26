@@ -1,8 +1,8 @@
 import { describe, it } from "jsr:@std/testing/bdd";
-import { processGameTurn } from "./game-turn-processor.ts";
-import { GamePhase } from "./game-state.ts";
+import { processGameTurn } from "./game-turn-service.ts";
+import { GamePhase } from "../game-state.ts";
 import { assertEquals } from "@std/assert/equals";
-import { minimalGame } from "./test-game-states.ts";
+import { minimalGame } from "../test-game-states.ts";
 
 describe("processGameTurn (valid actions)", () => {
   describe("Starting game", () => {

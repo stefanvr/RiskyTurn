@@ -1,4 +1,4 @@
-import { Vector } from "../lib/vector.ts";
+import { Vector } from "../../lib/vector.ts";
 
 export enum PlayerActionType {
   Pass,

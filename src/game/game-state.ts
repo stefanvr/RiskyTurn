@@ -1,5 +1,5 @@
 import type { FieldType } from "./game-elements.ts";
-import { GameRules } from "./game-rules.ts";
+import { GameRules } from "./configuration/game-rules.ts";
 
 export enum GamePhase {
   placing,

@@ -1,7 +1,7 @@
-import { GameState } from "./game-state.ts";
-import { PlayerAction, PlayerActionType } from "./game-actions.ts";
+import { GameState } from "../game-state.ts";
+import { PlayerAction, PlayerActionType } from "../interaction/game-actions.ts";
 
-export function validateGameTurn(
+export function validateGameTurnAction(
   beginState: GameState,
   action: PlayerAction,
 ): boolean {

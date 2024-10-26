@@ -1,4 +1,4 @@
-import { FieldStatus, GameState } from "./game-state.ts";
+import { FieldStatus, GameState } from "../game-state.ts";
 
 export function updatePlayerStats(state: GameState) {
   const allFields = state.mapStatus.fields

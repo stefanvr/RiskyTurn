@@ -1,9 +1,9 @@
-import { GamePhase, GameState } from "./game-state.ts";
-import { PlayerActionType, TurnActions } from "./game-actions.ts";
-import { validateGameTurn } from "./game-turn-action-validator.ts";
-import { applyGameMove } from "./game-turn-move.ts";
-import { updatePlayerStats } from "./game-turn-update-stats.ts";
-import { updatePlayerIncome } from "./game-turn-update-income.ts";
+import { GamePhase, GameState } from "../game-state.ts";
+import { PlayerActionType, TurnActions } from "../interaction/game-actions.ts";
+import { validateGameTurnAction } from "../turn/game-turn-action-validator.ts";
+import { playGameTurnAction } from "../turn/game-turn-play-action.ts";
+import { updatePlayerStats } from "../turn/game-turn-update-player-stats.ts";
+import { adminReceiveIncome } from "../turn-logic/game-turn-admin-receive-income.ts";
 
 export function processGameTurn(
   beginState: GameState,
@@ -12,14 +12,14 @@ export function processGameTurn(
   const endState = structuredClone(beginState);
 
   actions.forEach((action) => {
-    validateGameTurn(endState, action);
-    applyGameMove(endState, action);
+    validateGameTurnAction(endState, action);
+    playGameTurnAction(endState, action);
   });
   resolveBattle(
     endState,
     actions.filter((a) => a.type === PlayerActionType.Attack),
   );
-  updatePlayerIncome(endState);
+  adminReceiveIncome(endState);
   updatePlayerStats(endState);
 
   endState.gameStatus.phase = hasPlayerWon(endState)

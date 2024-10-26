@@ -1,11 +1,11 @@
 import { describe, it } from "jsr:@std/testing/bdd";
-import { minimalGame } from "./test-game-states.ts";
-import { PlayerAction, PlayerActionType } from "./game-actions.ts";
-import { Vector } from "../lib/vector.ts";
-import { validateGameTurn } from "./game-turn-action-validator.ts";
+import { minimalGame } from "../test-game-states.ts";
+import { PlayerAction, PlayerActionType } from "../interaction/game-actions.ts";
+import { Vector } from "../../lib/vector.ts";
+import { validateGameTurnAction } from "./game-turn-action-validator.ts";
 import { assertEquals } from "@std/assert/equals";
 
-describe("validateGameTurn", () => {
+describe("validateGameTurnAction", () => {
   describe("Action pass", () => {
     it("In game phase placing, is valid", () => {
       const inState = minimalGame;
@@ -13,7 +13,7 @@ describe("validateGameTurn", () => {
         type: PlayerActionType.Pass,
       };
 
-      const isValid = validateGameTurn(inState, action);
+      const isValid = validateGameTurnAction(inState, action);
       assertEquals(isValid, true);
     });
   });
@@ -30,7 +30,7 @@ describe("validateGameTurn", () => {
         },
       };
 
-      const isValid = validateGameTurn(inState, action);
+      const isValid = validateGameTurnAction(inState, action);
       assertEquals(isValid, false);
     });
 
@@ -45,7 +45,7 @@ describe("validateGameTurn", () => {
         },
       };
 
-      const isValid = validateGameTurn(inState, action);
+      const isValid = validateGameTurnAction(inState, action);
       assertEquals(isValid, true);
     });
   });

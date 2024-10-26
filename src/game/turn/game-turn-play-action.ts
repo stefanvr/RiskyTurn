@@ -1,7 +1,10 @@
-import { GameState } from "./game-state.ts";
-import { type PlayerAction, PlayerActionType } from "./game-actions.ts";
+import { GameState } from "../game-state.ts";
+import {
+  type PlayerAction,
+  PlayerActionType,
+} from "../interaction/game-actions.ts";
 
-export function applyGameMove(
+export function playGameTurnAction(
   beginState: GameState,
   action: PlayerAction,
 ): GameState {

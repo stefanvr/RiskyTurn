@@ -1,7 +1,7 @@
-import { FieldStatus, GameState } from "./game-state.ts";
-import { GameRules } from "./game-rules.ts";
+import { FieldStatus, GameState } from "../game-state.ts";
+import { GameRules } from "../configuration/game-rules.ts";
 
-export function updatePlayerIncome(state: GameState) {
+export function adminReceiveIncome(state: GameState) {
   const allFields = state.mapStatus.fields
     .flatMap((fieldRow) => fieldRow)
     .filter((f) => state.rules.fields[f.fieldType].live);

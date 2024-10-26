@@ -1,10 +1,10 @@
 import { describe, it } from "jsr:@std/testing/bdd";
-import { FieldType } from "./game-elements.ts";
+import { FieldType } from "../game-elements.ts";
 import { assertEquals } from "@std/assert/equals";
-import { minimalGame } from "./test-game-states.ts";
-import { updatePlayerIncome } from "./game-turn-update-income.ts";
+import { minimalGame } from "../test-game-states.ts";
+import { adminReceiveIncome } from "./game-turn-admin-receive-income.ts";
 
-describe("updatePlayerStats - calcMoney", () => {
+describe("adminReceiveIncome - calcMoney", () => {
   const PlayerId = 1;
 
   it("When no field conquered, Player receives 0", () => {
@@ -13,7 +13,7 @@ describe("updatePlayerStats - calcMoney", () => {
       { fieldType: FieldType.Dirt, playerId: null, units: 0 },
     ]];
 
-    updatePlayerIncome(state);
+    adminReceiveIncome(state);
 
     assertEquals(state.playersStatus[PlayerId].money, 0);
   });
@@ -26,7 +26,7 @@ describe("updatePlayerStats - calcMoney", () => {
       { fieldType: FieldType.Dirt, playerId: null, units: 0 },
     ]];
 
-    updatePlayerIncome(state);
+    adminReceiveIncome(state);
 
     assertEquals(state.playersStatus[PlayerId].money, 3 + 2);
   });
@@ -39,7 +39,7 @@ describe("updatePlayerStats - calcMoney", () => {
       { fieldType: FieldType.Dirt, playerId: null, units: 0 },
     ]];
 
-    updatePlayerIncome(state);
+    adminReceiveIncome(state);
 
     assertEquals(state.playersStatus[PlayerId].money, 3);
   });

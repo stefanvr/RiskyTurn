@@ -1,9 +1,9 @@
 import { describe, it } from "jsr:@std/testing/bdd";
 import { assertEquals } from "jsr:@std/assert";
 import { GameBuilder } from "./game-builder.ts";
-import { GamePhase, type MapStatus } from "./game-state.ts";
-import { FieldType } from "./game-elements.ts";
-import { MinimaGameConfig } from "./test-game-states.ts";
+import { GamePhase, type MapStatus } from "../game-state.ts";
+import { FieldType } from "../game-elements.ts";
+import { MinimaGameConfig } from "../test-game-states.ts";
 import { defaultRules } from "./game-rules.ts";
 
 const MinimalMapStatus: MapStatus = {
