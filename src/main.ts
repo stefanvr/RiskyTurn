@@ -1,5 +1,6 @@
-const appDiv: HTMLDivElement | null = document.getElementById("app");
+import { App } from "./app.ts";
 
-if (appDiv) {
-  appDiv.innerHTML = "<h1>Hello from Vite + TypeScript!</h1>";
-}
+const canvas = document.getElementById("game") as HTMLCanvasElement;
+
+const app = new App(canvas);
+app.start();
