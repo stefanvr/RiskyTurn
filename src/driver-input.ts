@@ -1,10 +1,19 @@
 import { Vector } from "./lib/vector.ts";
+import { GameEventType } from "./game-ui/game-flow-events.ts";
+
+export interface AppEventsHandler {
+  update(event: GameEventType): void;
+}
 
 export class DriverInput {
+  eventHandler: AppEventsHandler;
+
   constructor(
     canvas: HTMLCanvasElement,
+    eventHandler: AppEventsHandler,
   ) {
     this.initInputEventListeners(canvas);
+    this.eventHandler = eventHandler;
   }
 
   private initInputEventListeners(canvas: HTMLCanvasElement) {
@@ -30,8 +39,13 @@ export class DriverInput {
     //console.log("PointerStart", screenPosition);
   }
 
+  private demoToggle = true;
   private handlePointerEnd(_: Vector) {
     //console.log("handlePointerEnd", screenPosition);
+    this.eventHandler.update(
+      this.demoToggle ? GameEventType.StartGame : GameEventType.GameFinished,
+    ); // demo
+    this.demoToggle = !this.demoToggle;
   }
 
   private handlePointerMove(_: Vector) {

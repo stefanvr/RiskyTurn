@@ -48,6 +48,10 @@ export class DriverDisplay<SpriteType> {
     this.layers.push(layer);
   }
 
+  public removeLayer(tag: string) {
+    this.layers = this.layers.filter((layer) => layer.tag !== tag);
+  }
+
   private initResizeHandling(): void {
     globalThis.addEventListener("resize", () => {
       this.resize();

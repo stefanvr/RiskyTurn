@@ -30,10 +30,11 @@ export class App {
     this.spritePrinter = new SpritePrinter(SPRITE_SET);
 
     this.display = new DriverDisplay(this.ctx, this.spritePrinter);
-    this.input = new DriverInput(this.canvas);
     this.audio = new DriverAudio<SOUND, STREAM_TYPE, SOUND_FILE>(SFX_SET);
 
     this.gameAppFlow = new GameAppFlow(this.display, this.audio);
+
+    this.input = new DriverInput(this.canvas, this.gameAppFlow);
   }
 
   public async start() {

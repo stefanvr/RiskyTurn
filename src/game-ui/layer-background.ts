@@ -4,8 +4,9 @@ const img = new Image();
 img.src = "assets/background.png?height=500&width=500";
 img.crossOrigin = "anonymous";
 
+export const TAG_LAYER_BACKGROUND = "background";
 export class LayerBackground implements Layer {
-  tag: string = "background";
+  tag: string = TAG_LAYER_BACKGROUND;
 
   public render(ctx: CanvasRenderingContext2D) {
     const scale =
