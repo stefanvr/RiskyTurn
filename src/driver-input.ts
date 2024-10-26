@@ -26,15 +26,15 @@ export class DriverInput {
       .round();
   }
 
-  private handlePointerStart(screenPosition: Vector) {
-    console.log("PointerStart", screenPosition);
+  private handlePointerStart(_: Vector) {
+    //console.log("PointerStart", screenPosition);
   }
 
-  private handlePointerEnd(screenPosition: Vector) {
-    console.log("handlePointerEnd", screenPosition);
+  private handlePointerEnd(_: Vector) {
+    //console.log("handlePointerEnd", screenPosition);
   }
 
-  private handlePointerMove(screenPosition: Vector) {
-    console.log("handlePointerMove", screenPosition);
+  private handlePointerMove(_: Vector) {
+    //console.log("handlePointerMove", screenPosition);
   }
 }

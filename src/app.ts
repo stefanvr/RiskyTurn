@@ -1,5 +1,7 @@
-import { DriverDisplay } from "./driver-display.ts";
-import { DriverInput } from "./driver-input.ts";
+import { DriverDisplay } from './driver-display.ts';
+import { DriverInput } from './driver-input.ts';
+import { DriverAudio } from './driver-audio.ts';
+import { SFX_SET, SOUND, SOUND_FILE, STREAM_TYPE } from './audio/audio-config.ts';
 
 export class App {
   canvas: HTMLCanvasElement;
@@ -7,6 +9,7 @@ export class App {
 
   display: DriverDisplay;
   input: DriverInput;
+  audio: DriverAudio<SOUND, STREAM_TYPE, SOUND_FILE>;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -14,9 +17,12 @@ export class App {
 
     this.display = new DriverDisplay(this.ctx);
     this.input = new DriverInput(this.canvas);
+    this.audio = new DriverAudio<SOUND, STREAM_TYPE, SOUND_FILE>(SFX_SET);
   }
 
-  public start() {
+  public async start() {
     this.display.draw();
+    await this.audio.loadAudio();
+    this.audio.playSoundEffect(SOUND.Open);
   }
 }
