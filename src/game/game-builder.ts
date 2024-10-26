@@ -19,7 +19,10 @@ export class GameBuilder {
   createPlayerState(players: Player[]): PlayersStatus {
     const ps: PlayersStatus = {};
     players.forEach((player) => {
-      ps[player.id] = { playerId: player.id };
+      ps[player.id] = {
+        playerId: player.id,
+        placeableUnits: 2,
+      };
     });
 
     return ps;

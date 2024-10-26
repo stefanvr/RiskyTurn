@@ -1,6 +1,7 @@
 import { Vector } from "../lib/vector.ts";
 
-export enum PlayerAction {
+export enum PlayerActionType {
+  Pass,
   PlaceUnits,
 }
 
@@ -9,10 +10,14 @@ export type UnitPlacement = {
   units: number;
 };
 
-export type PlayerActions = {
-  type: PlayerAction.PlaceUnits;
-  playerId: number;
-  unitPlacement: UnitPlacement;
-};
+export type PlayerAction =
+  | {
+    type: PlayerActionType.Pass;
+  }
+  | {
+    type: PlayerActionType.PlaceUnits;
+    playerId: number;
+    unitPlacement: UnitPlacement;
+  };
 
-export type TurnActions = PlayerActions[];
+export type TurnActions = PlayerAction[];
