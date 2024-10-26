@@ -1,12 +1,7 @@
 import { DriverDisplay } from "./driver-display.ts";
 import { DriverInput } from "./driver-input.ts";
 import { DriverAudio } from "./driver-audio.ts";
-import {
-  SFX_SET,
-  SOUND,
-  SOUND_FILE,
-  STREAM_TYPE,
-} from "./audio/audio-config.ts";
+import { SFX_SET, Sound, SoundFile, StreamType } from "./audio/audio-config.ts";
 import { SPRITE_SET, SpriteFile } from "./display/sprite-config.ts";
 import { SpritePrinter } from "./display/sprite-printer.ts";
 import { GameAppFlow } from "./game-ui/game-app-flow.ts";
@@ -20,7 +15,7 @@ export class App {
 
   display: DriverDisplay<FieldType>;
   input: DriverInput;
-  audio: DriverAudio<SOUND, STREAM_TYPE, SOUND_FILE>;
+  audio: DriverAudio<Sound, StreamType, SoundFile>;
 
   gameAppFlow: GameAppFlow;
 
@@ -31,7 +26,7 @@ export class App {
     this.spritePrinter = new SpritePrinter(SPRITE_SET);
 
     this.display = new DriverDisplay(this.ctx, this.spritePrinter);
-    this.audio = new DriverAudio<SOUND, STREAM_TYPE, SOUND_FILE>(SFX_SET);
+    this.audio = new DriverAudio<Sound, StreamType, SoundFile>(SFX_SET);
 
     this.gameAppFlow = new GameAppFlow(this.display, this.audio);
 

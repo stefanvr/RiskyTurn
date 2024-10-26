@@ -1,9 +1,9 @@
 import { Vector } from "../../lib/vector.ts";
 
 export enum PlayerActionType {
-  Pass,
-  PlaceUnits,
-  Attack,
+  Pass = "Pass",
+  PlaceUnits = "PlaceUnits",
+  Attack = "Attack",
 }
 
 export type UnitPlacement = {

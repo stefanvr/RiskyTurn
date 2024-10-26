@@ -1,6 +1,6 @@
-export type AudioItem<Stream, StreamFile> = {
-  audioStream: Stream;
-  file: StreamFile;
+export type AudioItem<STREAM, STREAM_FILE> = {
+  audioStream: STREAM;
+  file: STREAM_FILE;
   start: number;
   stop: number;
 };
@@ -10,39 +10,39 @@ export type StreamItem = {
   buffer?: AudioBuffer;
 };
 
-export interface AudioAssetSet<Stream, StreamType, StreamFile> {
-  files: Map<StreamFile, StreamItem>;
-  sounds: Map<Stream, AudioItem<StreamType, StreamFile>>;
+export interface AudioAssetSet<STREAM, STREAM_TYPE, STREAM_FILE> {
+  files: Map<STREAM_FILE, StreamItem>;
+  sounds: Map<STREAM, AudioItem<STREAM_TYPE, STREAM_FILE>>;
 }
 
-export const createItem = <Stream, StreamFile>(
-  audioStream: Stream,
-  file: StreamFile,
+export const createItem = <STREAM, STREAM_FILE>(
+  audioStream: STREAM,
+  file: STREAM_FILE,
   start: number,
   stop: number,
   {}: Omit<
-    AudioItem<Stream, StreamFile>,
+    AudioItem<STREAM, STREAM_FILE>,
     "audioStream" | "file" | "start" | "stop"
   > = {},
-): AudioItem<Stream, StreamFile> => ({
+): AudioItem<STREAM, STREAM_FILE> => ({
   audioStream,
   file,
   start,
   stop,
 });
 
-export interface IDriverAudio<Stream> {
-  playSoundEffect(sound: Stream): boolean;
+export interface IDriverAudio<STREAM> {
+  playSoundEffect(sound: STREAM): boolean;
 }
 
-export class DriverAudio<Stream, StreamType, StreamFile>
-  implements IDriverAudio<Stream> {
+export class DriverAudio<STREAM, STREAM_TYPE, STREAM_FILE>
+  implements IDriverAudio<STREAM> {
   audioCtx: AudioContext = new AudioContext();
   gainMain: GainNode;
   initialized: boolean = false;
-  audioAssetSet: AudioAssetSet<Stream, StreamType, StreamFile>;
+  audioAssetSet: AudioAssetSet<STREAM, STREAM_TYPE, STREAM_FILE>;
 
-  constructor(audioAssetSet: AudioAssetSet<Stream, StreamType, StreamFile>) {
+  constructor(audioAssetSet: AudioAssetSet<STREAM, STREAM_TYPE, STREAM_FILE>) {
     this.audioAssetSet = audioAssetSet;
     this.gainMain = this.audioCtx.createGain();
     document.addEventListener(
@@ -81,7 +81,7 @@ export class DriverAudio<Stream, StreamType, StreamFile>
     return this.audioCtx.decodeAudioData(buffer);
   };
 
-  public playSoundEffect(sound: Stream): boolean {
+  public playSoundEffect(sound: STREAM): boolean {
     if (!this.initialized) {
       return false;
     }

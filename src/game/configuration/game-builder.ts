@@ -13,7 +13,7 @@ export class GameBuilder {
   public createGame(config: GameConfig): GameState {
     const gs: GameState = {
       rules: defaultRules,
-      gameStatus: { phase: GamePhase.placing },
+      gameStatus: { phase: GamePhase.Placing },
       playersStatus: this.createPlayerState(config.players),
       mapStatus: this.createMapStatus(config.mapConfig),
     };

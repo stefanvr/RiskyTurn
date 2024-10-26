@@ -10,7 +10,7 @@ describe("processGameTurn (valid actions)", () => {
     const outState = processGameTurn(inState, []);
 
     it("Status change from placing to playing", () => {
-      assertEquals(outState.gameStatus.phase, GamePhase.playing);
+      assertEquals(outState.gameStatus.phase, GamePhase.Playing);
     });
   });
 
@@ -20,7 +20,7 @@ describe("processGameTurn (valid actions)", () => {
     const outState = processGameTurn(inState, []);
 
     it("Status change from placing to finished", () => {
-      assertEquals(outState.gameStatus.phase, GamePhase.finished);
+      assertEquals(outState.gameStatus.phase, GamePhase.Finished);
     });
 
     it("Player stats reflect new state", () => {

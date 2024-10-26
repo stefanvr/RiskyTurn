@@ -23,8 +23,8 @@ export function processGameTurn(
   updatePlayerStats(endState);
 
   endState.gameStatus.phase = hasPlayerWon(endState)
-    ? GamePhase.finished
-    : GamePhase.playing;
+    ? GamePhase.Finished
+    : GamePhase.Playing;
   return endState;
 }
 

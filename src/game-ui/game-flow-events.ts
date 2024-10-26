@@ -1,4 +1,4 @@
 export enum GameEventType {
-  StartGame,
-  GameFinished,
+  StartGame = "StartGame",
+  GameFinished = "GameFinished",
 }

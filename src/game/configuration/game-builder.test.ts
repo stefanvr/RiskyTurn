@@ -17,8 +17,8 @@ describe("GameBuilder", () => {
   const g = new GameBuilder();
   const game = g.createGame(MinimaGameConfig);
 
-  it(`Game starts in phase: ${GamePhase.placing}`, () => {
-    assertEquals(game.gameStatus, { phase: GamePhase.placing });
+  it(`Game starts in phase: ${GamePhase.Placing}`, () => {
+    assertEquals(game.gameStatus, { phase: GamePhase.Placing });
     assertEquals(Object.entries(game.playersStatus).length, 2);
     assertEquals(game.mapStatus, MinimalMapStatus);
   });

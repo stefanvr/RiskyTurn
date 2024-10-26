@@ -1,4 +1,4 @@
-import { SOUND } from "../audio/audio-config.ts";
+import { Sound } from "../audio/audio-config.ts";
 import { DriverDisplay } from "../driver-display.ts";
 import { IDriverAudio } from "../driver-audio.ts";
 import { LayerBackground, TAG_LAYER_BACKGROUND } from "./layer-background.ts";
@@ -14,9 +14,9 @@ import { FieldType } from "../game/game-elements.ts";
 
 export class GameAppFlow implements AppEventsHandler {
   display: DriverDisplay<FieldType>;
-  audio: IDriverAudio<SOUND>;
+  audio: IDriverAudio<Sound>;
 
-  constructor(display: DriverDisplay<FieldType>, audio: IDriverAudio<SOUND>) {
+  constructor(display: DriverDisplay<FieldType>, audio: IDriverAudio<Sound>) {
     this.display = display;
     this.audio = audio;
   }
@@ -32,7 +32,7 @@ export class GameAppFlow implements AppEventsHandler {
           this.display.addLayer(new LayerGameBackground());
           this.display.removeLayer(TAG_LAYER_BACKGROUND);
           this.display.addSpriteLayer(new LayerGame(minimalGame));
-          this.audio.playSoundEffect(SOUND.Open);
+          this.audio.playSoundEffect(Sound.Open);
         }
         break;
       case GameEventType.GameFinished:
@@ -40,7 +40,7 @@ export class GameAppFlow implements AppEventsHandler {
           this.display.removeLayer(TAG_LAYER_GAME);
           this.display.addLayer(new LayerBackground());
           this.display.removeLayer(TAG_LAYER_GAME_BACKGROUND);
-          this.audio.playSoundEffect(SOUND.CLose);
+          this.audio.playSoundEffect(Sound.CLose);
         }
         break;
     }

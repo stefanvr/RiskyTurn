@@ -1,23 +1,23 @@
 import { AudioAssetSet, createItem } from "../driver-audio.ts";
 
-export enum SOUND {
+export enum Sound {
   Open,
   CLose,
 }
 
-export enum STREAM_TYPE {
-  effects = "effects",
+export enum StreamType {
+  Effects = "Effects",
   //music = "music",
 }
 
-export enum SOUND_FILE {
-  SFX,
+export enum SoundFile {
+  Sfx,
 }
 
-export const SFX_SET: AudioAssetSet<SOUND, STREAM_TYPE, SOUND_FILE> = {
-  files: new Map([[SOUND_FILE.SFX, { fileName: "/assets/sfx.mp3" }]]),
+export const SFX_SET: AudioAssetSet<Sound, StreamType, SoundFile> = {
+  files: new Map([[SoundFile.Sfx, { fileName: "/assets/sfx.mp3" }]]),
   sounds: new Map([
-    [SOUND.Open, createItem(STREAM_TYPE.effects, SOUND_FILE.SFX, 2, 4.1)],
-    [SOUND.CLose, createItem(STREAM_TYPE.effects, SOUND_FILE.SFX, 7.1, 9.2)],
+    [Sound.Open, createItem(StreamType.Effects, SoundFile.Sfx, 2, 4.1)],
+    [Sound.CLose, createItem(StreamType.Effects, SoundFile.Sfx, 7.1, 9.2)],
   ]),
 };

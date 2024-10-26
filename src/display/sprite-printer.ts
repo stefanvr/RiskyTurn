@@ -1,8 +1,8 @@
 import { Vector } from "../lib/vector.ts";
 import { ISpritePrinter } from "../driver-display.ts";
 
-export type Sprite<SpriteFile> = {
-  file: SpriteFile;
+export type Sprite<SPRITE_FILE> = {
+  file: SPRITE_FILE;
   start: Vector;
   size: Vector;
   offset: Vector;
@@ -13,16 +13,16 @@ export type SpriteItem = {
   sprites?: HTMLImageElement;
 };
 
-export interface SpriteAssetSet<SpriteType, SpriteFile> {
-  files: Map<SpriteFile, SpriteItem>;
-  sprites: Map<SpriteType, Sprite<SpriteFile>>;
+export interface SpriteAssetSet<SPRITE_TYPE, SPRITE_FILE> {
+  files: Map<SPRITE_FILE, SpriteItem>;
+  sprites: Map<SPRITE_TYPE, Sprite<SPRITE_FILE>>;
 }
 
-export class SpritePrinter<SpriteType, SpriteFile>
-  implements ISpritePrinter<SpriteType> {
-  spriteSet: SpriteAssetSet<SpriteType, SpriteFile>;
+export class SpritePrinter<SPRITE_TYPE, SPRITE_FILE>
+  implements ISpritePrinter<SPRITE_TYPE> {
+  spriteSet: SpriteAssetSet<SPRITE_TYPE, SPRITE_FILE>;
 
-  constructor(spriteSet: SpriteAssetSet<SpriteType, SpriteFile>) {
+  constructor(spriteSet: SpriteAssetSet<SPRITE_TYPE, SPRITE_FILE>) {
     this.spriteSet = spriteSet;
   }
 
@@ -37,7 +37,7 @@ export class SpritePrinter<SpriteType, SpriteFile>
   public drawSpriteType(
     ctx: CanvasRenderingContext2D,
     pos: Vector,
-    type: SpriteType,
+    type: SPRITE_TYPE,
   ) {
     this.drawSprite(ctx, pos, this.spriteSet.sprites.get(type)!);
   }
@@ -45,7 +45,7 @@ export class SpritePrinter<SpriteType, SpriteFile>
   private drawSprite(
     ctx: CanvasRenderingContext2D,
     pos: Vector,
-    sprite: Sprite<SpriteFile>,
+    sprite: Sprite<SPRITE_FILE>,
   ) {
     ctx.drawImage(
       this.spriteSet.files.get(sprite.file)!.sprites!,

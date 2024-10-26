@@ -1,10 +1,10 @@
 import { Vector } from "./lib/vector.ts";
 
-export interface ISpritePrinter<SpriteType> {
+export interface ISpritePrinter<SPRITE_TYPE> {
   drawSpriteType(
     ctx: CanvasRenderingContext2D,
     pos: Vector,
-    type: SpriteType,
+    type: SPRITE_TYPE,
   ): void;
 }
 
@@ -14,18 +14,18 @@ export interface Layer {
   render(ctx: CanvasRenderingContext2D): void;
 }
 
-export interface LayerSprite<T> extends Layer {
-  spritePrinter: ISpritePrinter<T> | null;
+export interface LayerSprite<SPRITE_TYPE> extends Layer {
+  spritePrinter: ISpritePrinter<SPRITE_TYPE> | null;
 }
 
-export class DriverDisplay<SpriteType> {
+export class DriverDisplay<SPRITE_TYPE> {
   ctx: CanvasRenderingContext2D;
-  spritePrinter: ISpritePrinter<SpriteType>;
+  spritePrinter: ISpritePrinter<SPRITE_TYPE>;
   layers: Layer[] = [];
 
   constructor(
     ctx: CanvasRenderingContext2D,
-    spritePrinter: ISpritePrinter<SpriteType>,
+    spritePrinter: ISpritePrinter<SPRITE_TYPE>,
   ) {
     this.ctx = ctx;
     this.initResizeHandling();
@@ -43,7 +43,7 @@ export class DriverDisplay<SpriteType> {
     this.layers.push(layer);
   }
 
-  public addSpriteLayer(layer: LayerSprite<SpriteType>) {
+  public addSpriteLayer(layer: LayerSprite<SPRITE_TYPE>) {
     layer.spritePrinter = this.spritePrinter;
     this.layers.push(layer);
   }
