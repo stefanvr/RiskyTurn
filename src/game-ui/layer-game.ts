@@ -34,6 +34,16 @@ export class LayerGame implements LayerSprite<FieldType> {
             ),
             t.fieldType,
           );
+
+          if (t.playerId !== null) {
+            ctx.fillStyle = t.playerId === 1 ? "red" : "blue";
+            ctx.fillRect(
+              xOffset + (220 * x) + 105,
+              yOffset + (220 * y) + 105,
+              10,
+              10,
+            );
+          }
         }
       }
     }
