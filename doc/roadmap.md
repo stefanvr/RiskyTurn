@@ -9,7 +9,10 @@ parts of the app.
   - [ ] Start Menu
   - [ ] Player status
   - [ ] Game status
+  - [ ] Switch Player turns
+  - [ ] Switch Player actions
   - [ ] Game finished
+
 - Other
   - [ ] Game config
   - [ ] Audio Config
@@ -18,6 +21,7 @@ parts of the app.
 ## Game (technical)
 
 - [ ] Hex grid logic
+- [ ] Player view on game status
 
 ## Display
 
@@ -46,7 +50,9 @@ parts of the app.
   - Turn
   - Additional owned
 - Other (buy) actions
-  - [ ] build
+  - [ ] build <-
   - [ ] defend
   - [ ] move
-- [ ] Attack *
+- [ ] Attack
+  - [ ] single attack <-
+  - [ ] multiple attacks
