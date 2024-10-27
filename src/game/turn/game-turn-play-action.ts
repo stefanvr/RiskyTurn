@@ -3,30 +3,20 @@ import {
   type PlayerAction,
   PlayerActionType,
 } from "../interaction/game-actions.ts";
+import { gameTurnAdminPlaceUnitsByPlayer } from "../turn-logic/game-turn-admin-place-units.ts";
+import { PlayerEvent } from "../interaction/game-player-events.ts";
 
 export function playGameTurnAction(
-  beginState: GameState,
+  state: GameState,
   action: PlayerAction,
-): GameState {
-  const endState = structuredClone(beginState);
-  applyAction(endState, action);
-  return endState;
-}
-
-function applyAction(state: GameState, action: PlayerAction) {
+): PlayerEvent | null {
   switch (action.type) {
     case PlayerActionType.Pass: {
-      return;
+      return null;
     }
     case PlayerActionType.PlaceUnits: {
-      state.playersStatus[action.playerId].placeableUnits -=
-        action.unitPlacement.units;
-      const f = state.mapStatus
-        .fields[action.unitPlacement.targetField.y][
-          action.unitPlacement.targetField.x
-        ];
-      f.units += action.unitPlacement.units;
-      return;
+      return gameTurnAdminPlaceUnitsByPlayer(state, action);
     }
   }
+  return null;
 }

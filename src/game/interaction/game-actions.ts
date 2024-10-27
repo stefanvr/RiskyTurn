@@ -11,15 +11,17 @@ export type UnitPlacement = {
   units: number;
 };
 
+export type UnitPlacementAction = {
+  type: PlayerActionType.PlaceUnits;
+  playerId: number;
+  unitPlacement: UnitPlacement;
+};
+
 export type PlayerAction =
   | {
     type: PlayerActionType.Pass;
   }
-  | {
-    type: PlayerActionType.PlaceUnits;
-    playerId: number;
-    unitPlacement: UnitPlacement;
-  }
+  | UnitPlacementAction
   | {
     type: PlayerActionType.Attack;
   };
