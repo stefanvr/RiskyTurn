@@ -1,32 +1,46 @@
-import { describe, it } from "jsr:@std/testing/bdd";
+import { beforeAll, describe, it } from "jsr:@std/testing/bdd";
 import { assertEquals } from "@std/assert/equals";
-import { PlayerAction, PlayerActionType } from "../interaction/game-actions.ts";
+import {
+  PlayerActionType,
+  UnitPlacementAction,
+} from "../interaction/game-actions.ts";
 import { Vector } from "../../lib/vector.ts";
 import { minimalGame } from "../test-game-states.ts";
 import { playGameTurnAction } from "../turn/game-turn-play-action.ts";
-import { PlayerEventType } from "../interaction/game-player-events.ts";
+import {
+  PlayerEventType,
+  UnitPlacementEvent,
+} from "../interaction/game-player-events.ts";
 import { FieldType } from "../game-elements.ts";
 import { playGameTurnEvent } from "../turn/game-turn-play-event.ts";
 import { validateGameTurnAction } from "../turn/game-turn-action-validator.ts";
+import { GameState } from "../game-state.ts";
 
 describe("PlaceUnit", () => {
-  const state = structuredClone(minimalGame);
-  state.mapStatus.fields = [[
-    { fieldType: FieldType.Dirt, playerId: null, units: 0 },
-    { fieldType: FieldType.Dirt, playerId: 1, units: 1 },
-  ]];
+  let state: GameState;
+  let action: UnitPlacementAction;
+  let event: UnitPlacementEvent;
 
-  const action: PlayerAction = {
-    type: PlayerActionType.PlaceUnits,
-    playerId: 1,
-    unitPlacement: {
-      targetField: new Vector(1, 0),
-      units: 2,
-    },
-  };
-  const event = playGameTurnAction(state, action)!;
+  beforeAll(() => {
+    state = structuredClone(minimalGame);
+    state.playersStatus[1].placeableUnits = 2;
+    state.mapStatus.fields = [[
+      { fieldType: FieldType.Dirt, playerId: null, units: 0 },
+      { fieldType: FieldType.Dirt, playerId: 1, units: 1 },
+    ]];
 
-  describe("Action is valid", () => {
+    action = {
+      type: PlayerActionType.PlaceUnits,
+      playerId: 1,
+      unitPlacement: {
+        targetField: new Vector(1, 0),
+        units: 2,
+      },
+    };
+    event = playGameTurnAction(state, action)! as UnitPlacementEvent;
+  });
+
+  it("Action is valid", () => {
     const isValid = validateGameTurnAction(state, action);
     assertEquals(isValid, true);
   });
@@ -52,7 +66,9 @@ describe("PlaceUnit", () => {
   });
 
   describe("Event result applied", () => {
-    playGameTurnEvent(state, event);
+    beforeAll(() => {
+      playGameTurnEvent(state, event);
+    });
 
     it("PLayer placement units, updated", () => {
       assertEquals(state.playersStatus[event.playerId].placeableUnits, 0);

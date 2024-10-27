@@ -6,6 +6,7 @@ import { updatePlayerStats } from "../turn/game-turn-update-player-stats.ts";
 import { adminReceiveIncome } from "../turn-logic/game-turn-admin-receive-income.ts";
 import { updateGameStats } from "../turn/game-turn-update-game-stats.ts";
 import { battle } from "../turn-logic/game-turn-battle.ts";
+import { playGameTurnEvent } from "../turn/game-turn-play-event.ts";
 
 export function processGameTurn(
   beginState: GameState,
@@ -15,7 +16,8 @@ export function processGameTurn(
 
   actions.forEach((action) => {
     validateGameTurnAction(endState, action);
-    playGameTurnAction(endState, action); // purchase & move
+    const event = playGameTurnAction(endState, action);
+    if (event) playGameTurnEvent(endState, event); // purchase & move
   });
   battle(endState, actions.filter((a) => a.type === PlayerActionType.Attack));
 

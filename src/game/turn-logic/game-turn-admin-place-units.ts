@@ -15,7 +15,8 @@ export function isValidUnitPlacement(
     ];
 
   return f.playerId === action.playerId &&
-    f.units >= action.unitPlacement.units;
+    state.playersStatus[f.playerId].placeableUnits >=
+      action.unitPlacement.units;
 }
 
 export function gameTurnAdminPlaceUnitsByPlayer(
@@ -28,7 +29,7 @@ export function gameTurnAdminPlaceUnitsByPlayer(
       action.unitPlacement.targetField.x
     ];
 
-  const e = {
+  return {
     type: PlayerEventType.UnitsPlaced,
     playerId: action.playerId,
     placementResult: {
@@ -41,8 +42,6 @@ export function gameTurnAdminPlaceUnitsByPlayer(
       },
     },
   };
-  gameTurnAdminPlacedUnitsByPlayer(state, e);
-  return e;
 }
 
 export function gameTurnAdminPlacedUnitsByPlayer(
