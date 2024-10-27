@@ -1,17 +1,25 @@
 import { FieldStatus, GameState } from "../game-state.ts";
 import { GameRules } from "../configuration/game-rules.ts";
+import {
+  IncomeEvent,
+  PlayerEventType,
+} from "../interaction/game-player-events.ts";
 
-export function adminReceiveIncome(state: GameState) {
+export function adminPayOutIncome(state: GameState): IncomeEvent[] {
   const allFields = state.mapStatus.fields
     .flatMap((fieldRow) => fieldRow)
     .filter((f) => state.rules.fields[f.fieldType].live);
 
-  Object.entries(state.playersStatus).forEach(([playerId, player]) => {
-    player.money += receiveMoney(+playerId, allFields, state.rules);
+  return Object.entries(state.playersStatus).map(([id, stat]): IncomeEvent => {
+    return {
+      type: PlayerEventType.Income,
+      playerId: +id,
+      income: stat.money + calculateIncome(+id, allFields, state.rules),
+    };
   });
 }
 
-function receiveMoney(
+function calculateIncome(
   playerId: number,
   allFields: FieldStatus[],
   rules: GameRules,
@@ -23,4 +31,13 @@ function receiveMoney(
   return conquered > 0
     ? rules.income.baseIncome + ((conquered - 1) * rules.income.fieldIncome)
     : 0;
+}
+
+export function adminReceiveIncome(
+  state: GameState,
+  payedOutIncome: IncomeEvent[],
+) {
+  return payedOutIncome.forEach((income) => {
+    state.playersStatus[income.playerId].money = income.income;
+  });
 }

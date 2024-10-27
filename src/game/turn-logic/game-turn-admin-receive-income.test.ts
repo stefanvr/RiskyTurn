@@ -1,46 +1,48 @@
-import { describe, it } from "jsr:@std/testing/bdd";
-import { FieldType } from "../game-elements.ts";
+import { beforeAll, describe, it } from "jsr:@std/testing/bdd";
 import { assertEquals } from "@std/assert/equals";
+import { IncomeEvent } from "../interaction/game-player-events.ts";
 import { minimalGame } from "../test-game-states.ts";
-import { adminReceiveIncome } from "./game-turn-admin-receive-income.ts";
+import { GameState } from "../game-state.ts";
+import {
+  adminPayOutIncome,
+  adminReceiveIncome,
+} from "./game-turn-admin-receive-income.ts";
 
-describe("adminReceiveIncome - calcMoney", () => {
+describe("Receive income", () => {
+  let state: GameState;
+  let events: IncomeEvent[];
   const PlayerId = 1;
 
-  it("When no field conquered, Player receives 0", () => {
-    const state = structuredClone(minimalGame);
-    state.mapStatus.fields = [[
-      { fieldType: FieldType.Dirt, playerId: null, units: 0 },
-    ]];
-
-    adminReceiveIncome(state);
-
-    assertEquals(state.playersStatus[PlayerId].money, 0);
+  beforeAll(() => {
+    state = structuredClone(minimalGame);
+    state.playersStatus[PlayerId].money = 1;
+    events = adminPayOutIncome(state)!;
   });
 
-  it("When 1 fields conquered, Player receives 2", () => {
-    const state = structuredClone(minimalGame);
-    state.playersStatus[PlayerId].money = 3;
-    state.mapStatus.fields = [[
-      { fieldType: FieldType.Dirt, playerId: PlayerId, units: 0 },
-      { fieldType: FieldType.Dirt, playerId: null, units: 0 },
-    ]];
-
-    adminReceiveIncome(state);
-
-    assertEquals(state.playersStatus[PlayerId].money, 3 + 2);
+  describe("Action result Event", () => {
+    it("Player event is returned", () => {
+      assertEquals(events, [
+        {
+          income: 3,
+          playerId: 1,
+          type: "Income",
+        },
+        {
+          income: 0,
+          playerId: 2,
+          type: "Income",
+        },
+      ]);
+    });
   });
 
-  it("When 2 fields conquered, Player receives 2+1", () => {
-    const state = structuredClone(minimalGame);
-    state.mapStatus.fields = [[
-      { fieldType: FieldType.Dirt, playerId: PlayerId, units: 0 },
-      { fieldType: FieldType.Dirt, playerId: PlayerId, units: 0 },
-      { fieldType: FieldType.Dirt, playerId: null, units: 0 },
-    ]];
+  describe("Event result applied", () => {
+    beforeAll(() => {
+      adminReceiveIncome(state, events);
+    });
 
-    adminReceiveIncome(state);
-
-    assertEquals(state.playersStatus[PlayerId].money, 3);
+    it("Player income, updated", () => {
+      assertEquals(state.playersStatus[PlayerId].money, 3);
+    });
   });
 });

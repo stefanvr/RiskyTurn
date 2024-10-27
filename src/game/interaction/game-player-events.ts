@@ -3,6 +3,7 @@ import { Vector } from "../../lib/vector.ts";
 export enum PlayerEventType {
   Passed = "Passed",
   UnitsPlaced = "UnitsPlaced",
+  Income = "Income",
 }
 
 export type UnitPlacementResult = {
@@ -21,6 +22,13 @@ export type UnitPlacementEvent = {
   placementResult: UnitPlacementResult;
 };
 
+export type IncomeEvent = {
+  type: PlayerEventType.Income;
+  playerId: number;
+  income: number;
+};
+
 export type PlayerEvent =
   | { type: PlayerEventType.Passed }
-  | UnitPlacementEvent;
+  | UnitPlacementEvent
+  | IncomeEvent;
