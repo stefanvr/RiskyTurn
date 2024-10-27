@@ -4,3 +4,4 @@
 node_modules
 raw/
 dist/
+cov_profile

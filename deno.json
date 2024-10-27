@@ -1,6 +1,7 @@
 {
   "tasks": {
     "test": "deno fmt && deno lint && deno test",
+    "cov": "deno test --coverage=cov_profile && deno coverage cov_profile --html",
     "dev": "deno run -A --node-modules-dir npm:vite",
     "build": "deno run -A --node-modules-dir npm:vite build",
     "preview": "deno run -A --node-modules-dir npm:vite preview",
