@@ -6,16 +6,15 @@ import { validateGameTurnAction } from "./game-turn-action-validator.ts";
 import { assertEquals } from "@std/assert/equals";
 
 describe("validateGameTurnAction (Invalid)", () => {
-  describe("Action pass", () => {
-    it("In game phase placing, is valid", () => {
-      const inState = minimalGame;
-      const action: PlayerAction = {
-        type: PlayerActionType.Pass,
-      };
+  it("Unknown action", () => {
+    const inState = minimalGame;
+    // deno-lint-ignore no-explicit-any
+    const action: any = {
+      type: "PlayerActionType.Invalid",
+    };
 
-      const isValid = validateGameTurnAction(inState, action);
-      assertEquals(isValid, true);
-    });
+    const isValid = validateGameTurnAction(inState, action);
+    assertEquals(isValid, false);
   });
 
   describe("PlaceUnits", () => {
