@@ -6,6 +6,8 @@ export enum PlayerEventType {
   BuildStarted = "BuildStarted",
   BuildFinished = "BuildFinished",
   Income = "Income",
+  Attacking = "Attacking",
+  BattleResult = "BattleResult",
 }
 
 export type UnitPlacementResult = {
@@ -55,9 +57,35 @@ export type IncomeEvent = {
   income: number;
 };
 
+export type AttackingEvent = {
+  type: PlayerEventType.Attacking;
+  playerId: number;
+  from: {
+    numberOfUnits: number;
+    targetField: Vector;
+  };
+  to: {
+    targetField: Vector;
+  };
+};
+
+export type BattleFieldResult = {
+  field: Vector;
+  numberOfUnits: number;
+  playerId: number;
+};
+
+export type BattleResultAction = {
+  type: PlayerEventType.BattleResult;
+  playerId: number;
+  fields: BattleFieldResult[];
+};
+
 export type PlayerEvent =
   | { type: PlayerEventType.Passed }
   | UnitPlacementEvent
   | BuildStartedEvent
   | BuildFinishedEvent
-  | IncomeEvent;
+  | IncomeEvent
+  | AttackingEvent
+  | BattleResultAction;

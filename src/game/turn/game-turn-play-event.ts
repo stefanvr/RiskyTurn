@@ -5,6 +5,7 @@ import {
   PlayerEventType,
 } from "../interaction/game-player-events.ts";
 import { gameTurnUnitBuildStarted } from "../turn-logic/game-turn-building-unit.ts";
+import { gameTurnAttacking } from "../turn-logic/game-turn-attack.ts";
 
 export function playGameTurnEvent(
   state: GameState,
@@ -19,6 +20,11 @@ export function playGameTurnEvent(
     case PlayerEventType.BuildStarted:
       {
         gameTurnUnitBuildStarted(state, event);
+      }
+      break;
+    case PlayerEventType.Attacking:
+      {
+        gameTurnAttacking(state, event);
       }
       break;
   }

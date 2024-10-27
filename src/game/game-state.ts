@@ -1,5 +1,6 @@
 import type { FieldType } from "./game-elements.ts";
 import { GameRules } from "./configuration/game-rules.ts";
+import { AttackingEvent } from "./interaction/game-player-events.ts";
 
 export enum GamePhase {
   Placing,
@@ -33,9 +34,11 @@ export type MapStatus = {
   fields: FieldStatus[][];
 };
 
+export type Battles = Map<string, AttackingEvent[]>;
 export type GameState = {
   rules: GameRules;
   gameStatus: GameStatus;
   playersStatus: PlayersStatus;
   mapStatus: MapStatus;
+  turnBattles: Battles;
 };

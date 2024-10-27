@@ -27,14 +27,24 @@ export type BuildUnitAction = {
   };
 };
 
+export type AttackAction = {
+  type: PlayerActionType.Attack;
+  playerId: number;
+  from: {
+    numberOfUnits: number;
+    targetField: Vector;
+  };
+  to: {
+    targetField: Vector;
+  };
+};
+
 export type PlayerAction =
   | {
     type: PlayerActionType.Pass;
   }
   | UnitPlacementAction
   | BuildUnitAction
-  | {
-    type: PlayerActionType.Attack;
-  };
+  | AttackAction;
 
 export type TurnActions = PlayerAction[];

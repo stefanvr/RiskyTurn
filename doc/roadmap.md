@@ -54,9 +54,12 @@ parts of the app.
   - [ ] defend
   - [ ] move
 - [ ] Attack
-  - [ ] single attack <-
+  - [x] single attack
+  - [ ] single Battle result <-
+  - [ ] adjacency check (hex first?)
   - [ ] multiple attacks
+  - [ ] multi Battle result
+
 - Code caveats
   - [ ] Location validate tests
   - [ ] publish change events in processor
-

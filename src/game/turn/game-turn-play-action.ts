@@ -9,6 +9,7 @@ import {
   PlayerEventType,
 } from "../interaction/game-player-events.ts";
 import { gameTurnBuildUnit } from "../turn-logic/game-turn-building-unit.ts";
+import { attack } from "../turn-logic/game-turn-attack.ts";
 
 export function playGameTurnAction(
   state: GameState,
@@ -23,6 +24,9 @@ export function playGameTurnAction(
     }
     case PlayerActionType.BuildUnit: {
       return gameTurnBuildUnit(state, action);
+    }
+    case PlayerActionType.Attack: {
+      return attack(state, action);
     }
   }
   return null;
