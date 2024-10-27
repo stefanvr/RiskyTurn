@@ -45,6 +45,7 @@ export class GameBuilder {
           fieldType: field.fieldType,
           playerId: field.playerId || null,
           units: 0,
+          unitsUnderConstruction: 0,
         });
       }
       fields.push(column);

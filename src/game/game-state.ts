@@ -26,6 +26,7 @@ export type FieldStatus = {
   fieldType: FieldType;
   playerId: number | null;
   units: number;
+  unitsUnderConstruction: number;
 };
 
 export type MapStatus = {

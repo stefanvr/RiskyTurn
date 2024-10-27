@@ -17,6 +17,7 @@ describe("processGameTurn (valid actions)", () => {
   describe("Finish game", () => {
     const inState = structuredClone(minimalGame);
     inState.mapStatus.fields[0][1].playerId = 1;
+    inState.mapStatus.fields[0][1].unitsUnderConstruction = 2;
     const outState = processGameTurn(inState, []);
 
     it("Status change from placing to finished", () => {
@@ -31,6 +32,11 @@ describe("processGameTurn (valid actions)", () => {
     it("Player receives income", () => {
       assertEquals(outState.playersStatus[1].money, 3);
       assertEquals(outState.playersStatus[2].money, 0);
+    });
+
+    it("Unit Construction", () => {
+      assertEquals(outState.mapStatus.fields[0][1].units, 2);
+      assertEquals(outState.mapStatus.fields[0][1].unitsUnderConstruction, 0);
     });
   });
 });

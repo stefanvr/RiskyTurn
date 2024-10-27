@@ -10,7 +10,12 @@ describe("updatePlayerStats - calcDomination", () => {
   it("When no field conquered, Player has 0% ", () => {
     const state = structuredClone(minimalGame);
     state.mapStatus.fields = [[
-      { fieldType: FieldType.Dirt, playerId: null, units: 0 },
+      {
+        fieldType: FieldType.Dirt,
+        playerId: null,
+        units: 0,
+        unitsUnderConstruction: 0,
+      },
     ]];
 
     updatePlayerStats(state);
@@ -21,9 +26,24 @@ describe("updatePlayerStats - calcDomination", () => {
   it("When 1 out 3 fields conquered, Player has 33% ", () => {
     const state = structuredClone(minimalGame);
     state.mapStatus.fields = [[
-      { fieldType: FieldType.Dirt, playerId: PlayerId, units: 0 },
-      { fieldType: FieldType.Dirt, playerId: null, units: 0 },
-      { fieldType: FieldType.Dirt, playerId: null, units: 0 },
+      {
+        fieldType: FieldType.Dirt,
+        playerId: PlayerId,
+        units: 0,
+        unitsUnderConstruction: 0,
+      },
+      {
+        fieldType: FieldType.Dirt,
+        playerId: null,
+        units: 0,
+        unitsUnderConstruction: 0,
+      },
+      {
+        fieldType: FieldType.Dirt,
+        playerId: null,
+        units: 0,
+        unitsUnderConstruction: 0,
+      },
     ]];
 
     updatePlayerStats(state);
@@ -34,10 +54,30 @@ describe("updatePlayerStats - calcDomination", () => {
   it("When 1 out 3 conquered and one dead field, Player has 50% ", () => {
     const state = structuredClone(minimalGame);
     state.mapStatus.fields = [[
-      { fieldType: FieldType.Dirt, playerId: PlayerId, units: 0 },
-      { fieldType: FieldType.Dirt, playerId: null, units: 0 },
-      { fieldType: FieldType.None, playerId: null, units: 0 },
-      { fieldType: FieldType.Stone, playerId: null, units: 0 },
+      {
+        fieldType: FieldType.Dirt,
+        playerId: PlayerId,
+        units: 0,
+        unitsUnderConstruction: 0,
+      },
+      {
+        fieldType: FieldType.Dirt,
+        playerId: null,
+        units: 0,
+        unitsUnderConstruction: 0,
+      },
+      {
+        fieldType: FieldType.None,
+        playerId: null,
+        units: 0,
+        unitsUnderConstruction: 0,
+      },
+      {
+        fieldType: FieldType.Stone,
+        playerId: null,
+        units: 0,
+        unitsUnderConstruction: 0,
+      },
     ]];
 
     updatePlayerStats(state);

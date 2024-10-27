@@ -3,6 +3,7 @@ import { Vector } from "../../lib/vector.ts";
 export enum PlayerActionType {
   Pass = "Pass",
   PlaceUnits = "PlaceUnits",
+  BuildUnit = "BuildUnit",
   Attack = "Attack",
 }
 
@@ -17,11 +18,21 @@ export type UnitPlacementAction = {
   unitPlacement: UnitPlacement;
 };
 
+export type BuildUnitAction = {
+  type: PlayerActionType.BuildUnit;
+  playerId: number;
+  buildInstruction: {
+    numberOfUnits: number;
+    targetField: Vector;
+  };
+};
+
 export type PlayerAction =
   | {
     type: PlayerActionType.Pass;
   }
   | UnitPlacementAction
+  | BuildUnitAction
   | {
     type: PlayerActionType.Attack;
   };

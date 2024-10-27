@@ -10,6 +10,10 @@ import {
 import { updateGameStats } from "../turn/game-turn-update-game-stats.ts";
 import { battle } from "../turn-logic/game-turn-battle.ts";
 import { playGameTurnEvent } from "../turn/game-turn-play-event.ts";
+import {
+  adminReceiveConstructedUnits,
+  adminUnitsReady,
+} from "../turn-logic/game-turn-admin-receive-constructed-units.ts";
 
 export function processGameTurn(
   beginState: GameState,
@@ -29,7 +33,7 @@ export function processGameTurn(
 
   // Next round
   adminReceiveIncome(endState, adminPayOutIncome(endState));
-  //adminReceiveUnits
+  adminReceiveConstructedUnits(endState, adminUnitsReady(endState));
 
   return endState;
 }

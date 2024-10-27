@@ -50,9 +50,13 @@ parts of the app.
   - Turn
   - Additional owned
 - Other (buy) actions
-  - [ ] build <-
+  - [x] build
   - [ ] defend
   - [ ] move
 - [ ] Attack
   - [ ] single attack <-
   - [ ] multiple attacks
+- Code caveats
+  - [ ] Location validate tests
+  - [ ] publish change events in processor
+
