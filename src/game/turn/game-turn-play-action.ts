@@ -4,7 +4,10 @@ import {
   PlayerActionType,
 } from "../interaction/game-actions.ts";
 import { gameTurnAdminPlaceUnitsByPlayer } from "../turn-logic/game-turn-admin-place-units.ts";
-import { PlayerEvent } from "../interaction/game-player-events.ts";
+import {
+  PlayerEvent,
+  PlayerEventType,
+} from "../interaction/game-player-events.ts";
 
 export function playGameTurnAction(
   state: GameState,
@@ -12,7 +15,7 @@ export function playGameTurnAction(
 ): PlayerEvent | null {
   switch (action.type) {
     case PlayerActionType.Pass: {
-      return null;
+      return { type: PlayerEventType.Passed };
     }
     case PlayerActionType.PlaceUnits: {
       return gameTurnAdminPlaceUnitsByPlayer(state, action);

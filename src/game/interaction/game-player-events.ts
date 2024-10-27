@@ -1,6 +1,7 @@
 import { Vector } from "../../lib/vector.ts";
 
 export enum PlayerEventType {
+  Passed = "Passed",
   UnitsPlaced = "UnitsPlaced",
 }
 
@@ -20,4 +21,6 @@ export type UnitPlacementEvent = {
   placementResult: UnitPlacementResult;
 };
 
-export type PlayerEvent = UnitPlacementEvent;
+export type PlayerEvent =
+  | { type: PlayerEventType.Passed }
+  | UnitPlacementEvent;
