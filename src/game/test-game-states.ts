@@ -8,8 +8,9 @@ import { GameBuilder } from "./configuration/game-builder.ts";
 
 export const MinimalMap: MapConfig = {
   fields: [[
-    { fieldType: FieldType.Dirt, playerId: 1 },
+    { fieldType: FieldType.Stone },
     { fieldType: FieldType.Dirt },
+    { fieldType: FieldType.Dirt, playerId: 1 },
   ]],
 };
 export const MinimaGameConfig: GameConfig = {

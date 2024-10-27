@@ -8,8 +8,9 @@ import { defaultRules } from "./game-rules.ts";
 
 const MinimalMapStatus: MapStatus = {
   fields: [[
-    { fieldType: FieldType.Dirt, playerId: 1, units: 0 },
+    { fieldType: FieldType.Stone, playerId: null, units: 0 },
     { fieldType: FieldType.Dirt, playerId: null, units: 0 },
+    { fieldType: FieldType.Dirt, playerId: 1, units: 0 },
   ]],
 };
 

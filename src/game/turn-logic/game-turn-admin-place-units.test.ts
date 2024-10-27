@@ -11,7 +11,6 @@ import {
   PlayerEventType,
   UnitPlacementEvent,
 } from "../interaction/game-player-events.ts";
-import { FieldType } from "../game-elements.ts";
 import { playGameTurnEvent } from "../turn/game-turn-play-event.ts";
 import { validateGameTurnAction } from "../turn/game-turn-action-validator.ts";
 import { GameState } from "../game-state.ts";
@@ -24,16 +23,13 @@ describe("PlaceUnit", () => {
   beforeAll(() => {
     state = structuredClone(minimalGame);
     state.playersStatus[1].placeableUnits = 2;
-    state.mapStatus.fields = [[
-      { fieldType: FieldType.Dirt, playerId: null, units: 0 },
-      { fieldType: FieldType.Dirt, playerId: 1, units: 1 },
-    ]];
+    state.mapStatus.fields[0][2].units = 1;
 
     action = {
       type: PlayerActionType.PlaceUnits,
       playerId: 1,
       unitPlacement: {
-        targetField: new Vector(1, 0),
+        targetField: new Vector(2, 0),
         units: 2,
       },
     };
@@ -70,12 +66,12 @@ describe("PlaceUnit", () => {
       playGameTurnEvent(state, event);
     });
 
-    it("PLayer placement units, updated", () => {
+    it("Player placement units, updated", () => {
       assertEquals(state.playersStatus[event.playerId].placeableUnits, 0);
     });
 
     it("Target field units, updated", () => {
-      assertEquals(state.mapStatus.fields[0][1].units, 3);
+      assertEquals(state.mapStatus.fields[0][2].units, 3);
     });
   });
 });
