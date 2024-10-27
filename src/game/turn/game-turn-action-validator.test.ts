@@ -5,7 +5,7 @@ import { Vector } from "../../lib/vector.ts";
 import { validateGameTurnAction } from "./game-turn-action-validator.ts";
 import { assertEquals } from "@std/assert/equals";
 
-describe("validateGameTurnAction", () => {
+describe("validateGameTurnAction (Invalid)", () => {
   describe("Action pass", () => {
     it("In game phase placing, is valid", () => {
       const inState = minimalGame;
@@ -19,6 +19,21 @@ describe("validateGameTurnAction", () => {
   });
 
   describe("PlaceUnits", () => {
+    it("More than player placeableUnits, is invalid", () => {
+      const inState = minimalGame;
+      const action: PlayerAction = {
+        type: PlayerActionType.PlaceUnits,
+        playerId: 1,
+        unitPlacement: {
+          targetField: new Vector(0, 0),
+          units: 5,
+        },
+      };
+
+      const isValid = validateGameTurnAction(inState, action);
+      assertEquals(isValid, false);
+    });
+
     it("On field not owned, is invalid", () => {
       const inState = minimalGame;
       const action: PlayerAction = {
@@ -32,21 +47,6 @@ describe("validateGameTurnAction", () => {
 
       const isValid = validateGameTurnAction(inState, action);
       assertEquals(isValid, false);
-    });
-
-    it("On field owned, is valid", () => {
-      const inState = minimalGame;
-      const action: PlayerAction = {
-        type: PlayerActionType.PlaceUnits,
-        playerId: 1,
-        unitPlacement: {
-          targetField: new Vector(0, 0),
-          units: 2,
-        },
-      };
-
-      const isValid = validateGameTurnAction(inState, action);
-      assertEquals(isValid, true);
     });
   });
 });

@@ -1,8 +1,9 @@
 import { GameState } from "../game-state.ts";
 import { PlayerAction, PlayerActionType } from "../interaction/game-actions.ts";
+import { isValidUnitPlacement } from "../turn-logic/game-turn-admin-place-units.ts";
 
 export function validateGameTurnAction(
-  beginState: GameState,
+  state: GameState,
   action: PlayerAction,
 ): boolean {
   switch (action.type) {
@@ -10,11 +11,7 @@ export function validateGameTurnAction(
       return true;
     }
     case PlayerActionType.PlaceUnits: {
-      const f = beginState.mapStatus
-        .fields[action.unitPlacement.targetField.y][
-          action.unitPlacement.targetField.x
-        ];
-      return f.playerId === action.playerId;
+      return isValidUnitPlacement(state, action);
     }
   }
 

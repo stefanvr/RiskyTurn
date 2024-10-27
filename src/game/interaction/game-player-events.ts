@@ -5,8 +5,13 @@ export enum PlayerEventType {
 }
 
 export type UnitPlacementResult = {
-  targetField: Vector;
-  units: number;
+  target: {
+    field: Vector;
+    units: number;
+  };
+  player: {
+    placeableUnits: number;
+  };
 };
 
 export type UnitPlacementEvent = {
