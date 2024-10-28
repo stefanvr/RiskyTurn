@@ -22,6 +22,25 @@ export class LayerGame implements LayerSprite<FieldType> {
     const xOffset = (ctx.canvas.width - (220 * xFieldLength)) / 2;
     const yOffset = (ctx.canvas.height - (220 * yFieldLength)) / 2;
 
+    ctx.fillStyle = "gray";
+    ctx.font = `bold ${24}px monospace`;
+    ctx.fillText(
+      `Game Phase:${this.gameState.gameStatus.phase.toString()}`,
+      0,
+      20,
+    );
+
+    Object.entries(this.gameState.playersStatus).forEach(
+      ([id, playerStatus]) => {
+        ctx.fillStyle = +id === 1 ? "red" : "blue";
+        ctx.fillText(
+          `Player: Money-${playerStatus.money} Units-${playerStatus.placeableUnits} Domination-${playerStatus.mapDomination}`,
+          0,
+          20 + (24 * +id),
+        );
+      },
+    );
+
     for (let y = 0; y < yFieldLength; y++) {
       for (let x = 0; x < xFieldLength; x++) {
         const t = grid[y][x];
@@ -35,13 +54,24 @@ export class LayerGame implements LayerSprite<FieldType> {
             t.fieldType,
           );
 
-          if (t.playerId !== null) {
-            ctx.fillStyle = t.playerId === 1 ? "red" : "blue";
-            ctx.fillRect(
-              xOffset + (220 * x) + 105,
-              yOffset + (220 * y) + 105,
-              10,
-              10,
+          if (this.gameState.rules.fields[t.fieldType].live) {
+            if (t.playerId !== null) {
+              ctx.fillStyle = t.playerId === 1 ? "red" : "blue";
+              ctx.fillRect(
+                xOffset + (220 * x) + 105,
+                yOffset + (220 * y) + 105,
+                10,
+                10,
+              );
+            } else {
+              ctx.fillStyle = "gray";
+            }
+
+            const text = `${t.units}-${t.unitsUnderConstruction}`;
+            ctx.fillText(
+              text,
+              xOffset + (220 * x) + 110 - (ctx.measureText(text).width / 2),
+              yOffset + (220 * y) + 110 + 35,
             );
           }
         }

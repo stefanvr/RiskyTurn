@@ -3,9 +3,9 @@ import { GameRules } from "./configuration/game-rules.ts";
 import { AttackingEvent } from "./interaction/game-player-events.ts";
 
 export enum GamePhase {
-  Placing,
-  Playing,
-  Finished,
+  Placing = "Placing",
+  Playing = "Playing",
+  Finished = "Finished",
 }
 
 export type GameStatus = {
