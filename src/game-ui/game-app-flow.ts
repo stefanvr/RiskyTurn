@@ -39,6 +39,8 @@ export class GameAppFlow implements AppEventsHandler {
           }
           if (this.state.status === GameAppStatePhases.endGame) {
             this.update(GameEventType.GameFinished);
+            this.state = new GameAppState(minimalGame);
+            return;
           }
           this.state.nextPhase();
         }
