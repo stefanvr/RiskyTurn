@@ -2,15 +2,18 @@ import { type ISpritePrinter, type LayerSprite } from "../driver-display.ts";
 import { GameState } from "../game/game-state.ts";
 import { Vector } from "../lib/vector.ts";
 import { FieldType } from "../game/game-elements.ts";
+import { GameAppState } from "./game-app-state.ts";
 
 export const TAG_LAYER_GAME = "game";
 export class LayerGame implements LayerSprite<FieldType> {
   public spritePrinter: ISpritePrinter<FieldType> | null = null;
   tag: string = TAG_LAYER_GAME;
   gameState: GameState;
+  gameAppState: GameAppState;
 
-  constructor(gameState: GameState) {
+  constructor(gameState: GameState, GameAppState: GameAppState) {
     this.gameState = gameState;
+    this.gameAppState = GameAppState;
   }
 
   public render(ctx: CanvasRenderingContext2D) {
@@ -25,9 +28,14 @@ export class LayerGame implements LayerSprite<FieldType> {
     ctx.fillStyle = "gray";
     ctx.font = `bold ${24}px monospace`;
     ctx.fillText(
-      `Game Phase:${this.gameState.gameStatus.phase.toString()}`,
+      `Game Phase:${this.gameAppState.status.toString()}`,
       0,
       20,
+    );
+    ctx.fillText(
+      `Game Phase:${this.gameState.gameStatus.phase.toString()}`,
+      0,
+      40,
     );
 
     Object.entries(this.gameState.playersStatus).forEach(
@@ -36,7 +44,7 @@ export class LayerGame implements LayerSprite<FieldType> {
         ctx.fillText(
           `Player: Money-${playerStatus.money} Units-${playerStatus.placeableUnits} Domination-${playerStatus.mapDomination}`,
           0,
-          20 + (24 * +id),
+          40 + (24 * +id),
         );
       },
     );

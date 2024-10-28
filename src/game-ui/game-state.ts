@@ -5,6 +5,7 @@ import {
 } from "../game/configuration/game-config.ts";
 import { FieldType } from "../game/game-elements.ts";
 import { GameBuilder } from "../game/configuration/game-builder.ts";
+import { GameState } from "../game/game-state.ts";
 
 export const MinimalMap: MapConfig = {
   fields: [[
@@ -20,4 +21,6 @@ export const MinimaGameConfig: GameConfig = {
   mapConfig: MinimalMap,
 };
 
-export const minimalGame = new GameBuilder().createGame(MinimaGameConfig);
+export let minimalGame: GameState;
+export const Gamebuilder = () =>
+  minimalGame = new GameBuilder().createGame(MinimaGameConfig);

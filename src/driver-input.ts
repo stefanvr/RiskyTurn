@@ -39,13 +39,9 @@ export class DriverInput {
     //console.log("PointerStart", screenPosition);
   }
 
-  private demoToggle = true;
   private handlePointerEnd(_: Vector) {
     //console.log("handlePointerEnd", screenPosition);
-    this.eventHandler.update(
-      this.demoToggle ? GameEventType.StartGame : GameEventType.GameFinished,
-    ); // demo
-    this.demoToggle = !this.demoToggle;
+    this.eventHandler.update(GameEventType.NextState); // demo
   }
 
   private handlePointerMove(_: Vector) {
