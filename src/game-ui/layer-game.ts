@@ -86,4 +86,13 @@ export class LayerGame implements LayerSprite<FieldType> {
       }
     }
   }
+
+  handlePointerStart(_: Vector): void {
+  }
+
+  handlePointerEnd(position: Vector): void {
+  }
+
+  handlePointerMove(position: Vector): void {
+  }
 }

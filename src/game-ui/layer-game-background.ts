@@ -37,4 +37,8 @@ export class LayerGameBackground implements Layer {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   }
+
+  handlePointerStart(_: Vector): void {}
+  handlePointerEnd(_: Vector): void {}
+  handlePointerMove(_: Vector): void {}
 }

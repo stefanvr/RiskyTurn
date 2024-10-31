@@ -30,7 +30,7 @@ export class App {
 
     this.gameAppFlow = new GameAppFlow(this.display, this.audio);
 
-    this.input = new DriverInput(this.canvas, this.gameAppFlow);
+    this.input = new DriverInput(this.canvas, this.display);
   }
 
   public async start() {

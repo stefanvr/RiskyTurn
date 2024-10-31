@@ -1,4 +1,5 @@
 import { Layer } from "../driver-display.ts";
+import { Vector } from "../lib/vector.ts";
 
 const img = new Image();
 img.src = "assets/background.png?height=500&width=500";
@@ -20,5 +21,15 @@ export class LayerBackground implements Layer {
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
     ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+
+    this.button.Draw(ctx);
+  }
+
+  handlePointerStart(_: Vector): void {}
+
+  handlePointerEnd(position: Vector): void {
+  }
+
+  handlePointerMove(position: Vector): void {
   }
 }

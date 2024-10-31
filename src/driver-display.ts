@@ -1,4 +1,5 @@
 import { Vector } from "./lib/vector.ts";
+import { AppEventsHandler } from "./driver-input.ts";
 
 export interface ISpritePrinter<SPRITE_TYPE> {
   drawSpriteType(
@@ -8,7 +9,7 @@ export interface ISpritePrinter<SPRITE_TYPE> {
   ): void;
 }
 
-export interface Layer {
+export interface Layer extends AppEventsHandler {
   tag: string;
 
   render(ctx: CanvasRenderingContext2D): void;
@@ -18,7 +19,7 @@ export interface LayerSprite<SPRITE_TYPE> extends Layer {
   spritePrinter: ISpritePrinter<SPRITE_TYPE> | null;
 }
 
-export class DriverDisplay<SPRITE_TYPE> {
+export class DriverDisplay<SPRITE_TYPE> implements AppEventsHandler {
   ctx: CanvasRenderingContext2D;
   spritePrinter: ISpritePrinter<SPRITE_TYPE>;
   layers: Layer[] = [];
@@ -50,6 +51,25 @@ export class DriverDisplay<SPRITE_TYPE> {
 
   public removeLayer(tag: string) {
     this.layers = this.layers.filter((layer) => layer.tag !== tag);
+  }
+
+  handlePointerStart(position: Vector): void {
+    this.layers.forEach((layer) => {
+      console.log("start", position);
+      layer.handlePointerStart(position);
+    });
+  }
+
+  handlePointerEnd(position: Vector): void {
+    this.layers.forEach((layer) => {
+      layer.handlePointerEnd(position);
+    });
+  }
+
+  handlePointerMove(position: Vector): void {
+    this.layers.forEach((layer) => {
+      layer.handlePointerMove(position);
+    });
   }
 
   private initResizeHandling(): void {
