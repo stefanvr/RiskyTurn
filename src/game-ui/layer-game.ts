@@ -3,6 +3,7 @@ import { GameState } from "../game/game-state.ts";
 import { Vector } from "../lib/vector.ts";
 import { FieldType } from "../game/game-elements.ts";
 import { GameAppState } from "./game-app-state.ts";
+import { Button } from "../display/ui-elements/button.ts";
 
 export const TAG_LAYER_GAME = "game";
 export class LayerGame implements LayerSprite<FieldType> {
@@ -10,10 +11,16 @@ export class LayerGame implements LayerSprite<FieldType> {
   tag: string = TAG_LAYER_GAME;
   gameState: GameState;
   gameAppState: GameAppState;
+  button: Button;
 
   constructor(gameState: GameState, GameAppState: GameAppState) {
     this.gameState = gameState;
     this.gameAppState = GameAppState;
+    this.button = new Button(
+      new Vector(50, 100),
+      new Vector(400, 50),
+      this.gameAppState.getAction(),
+    );
   }
 
   public render(ctx: CanvasRenderingContext2D) {
@@ -27,11 +34,6 @@ export class LayerGame implements LayerSprite<FieldType> {
 
     ctx.fillStyle = "gray";
     ctx.font = `bold ${24}px monospace`;
-    ctx.fillText(
-      `Game Phase:${this.gameAppState.status.toString()}`,
-      0,
-      20,
-    );
     ctx.fillText(
       `Game Phase:${this.gameState.gameStatus.phase.toString()}`,
       0,
@@ -85,14 +87,21 @@ export class LayerGame implements LayerSprite<FieldType> {
         }
       }
     }
+    this.button.Draw(ctx);
   }
 
   handlePointerStart(_: Vector): void {
   }
 
   handlePointerEnd(position: Vector): void {
+    if (this.button?.collision(position)) {
+      this.button.Action();
+    }
   }
 
   handlePointerMove(position: Vector): void {
+    this.button?.collision(position)
+      ? this.button.Mark()
+      : this.button?.ClearMark();
   }
 }

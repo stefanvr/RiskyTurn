@@ -1,4 +1,5 @@
 import { GamePhase, GameState } from "../game/game-state.ts";
+import { ButtonCallback } from "../display/ui-elements/button.ts";
 
 export enum GameAppStatePhases {
   startGame = "Start Game",
@@ -15,6 +16,13 @@ export class GameAppState {
 
   constructor(gamestate: GameState) {
     this.gamestate = gamestate;
+  }
+
+  public getAction(): ButtonCallback {
+    return {
+      text: () => this.status.toString(),
+      action: () => this.nextPhase(),
+    };
   }
 
   public nextPhase() {

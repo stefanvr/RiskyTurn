@@ -1,4 +1,5 @@
 import { Layer } from "../driver-display.ts";
+import { Vector } from "../lib/vector.ts";
 
 export const TAG_LAYER_GAME_BACKGROUND = "game-background";
 export class LayerGameBackground implements Layer {

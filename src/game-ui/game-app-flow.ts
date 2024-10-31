@@ -3,7 +3,7 @@ import { DriverDisplay } from "../driver-display.ts";
 import { IDriverAudio } from "../driver-audio.ts";
 import { LayerBackground, TAG_LAYER_BACKGROUND } from "./layer-background.ts";
 import { GameEventType } from "./game-flow-events.ts";
-import { AppEventsHandler } from "../driver-input.ts";
+
 import {
   LayerGameBackground,
   TAG_LAYER_GAME_BACKGROUND,
@@ -13,7 +13,7 @@ import { Gamebuilder, minimalGame } from "./game-state.ts";
 import { FieldType } from "../game/game-elements.ts";
 import { GameAppState, GameAppStatePhases } from "./game-app-state.ts";
 
-export class GameAppFlow implements AppEventsHandler {
+export class GameAppFlow {
   display: DriverDisplay<FieldType>;
   audio: IDriverAudio<Sound>;
   state: GameAppState;
@@ -25,7 +25,7 @@ export class GameAppFlow implements AppEventsHandler {
   }
 
   public start() {
-    this.display.addLayer(new LayerBackground());
+    this.display.addLayer(new LayerBackground(this));
     Gamebuilder();
     this.state = new GameAppState(minimalGame);
   }
@@ -57,7 +57,7 @@ export class GameAppFlow implements AppEventsHandler {
         {
           this.state.nextPhase();
           this.display.removeLayer(TAG_LAYER_GAME);
-          this.display.addLayer(new LayerBackground());
+          this.display.addLayer(new LayerBackground(this));
           this.display.removeLayer(TAG_LAYER_GAME_BACKGROUND);
           this.audio.playSoundEffect(Sound.CLose);
         }
