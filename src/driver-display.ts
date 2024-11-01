@@ -12,6 +12,7 @@ export interface ISpritePrinter<SPRITE_TYPE> {
 export interface Layer extends AppEventsHandler {
   tag: string;
 
+  stopAnimation(): void;
   render(ctx: CanvasRenderingContext2D): void;
 }
 
@@ -50,6 +51,9 @@ export class DriverDisplay<SPRITE_TYPE> implements AppEventsHandler {
   }
 
   public removeLayer(tag: string) {
+    this.layers.filter((layer) => layer.tag === tag).forEach((layer) => {
+      layer.stopAnimation();
+    });
     this.layers = this.layers.filter((layer) => layer.tag !== tag);
   }
 

@@ -23,6 +23,8 @@ export class LayerGame implements LayerSprite<FieldType> {
     );
   }
 
+  public stopAnimation() {}
+
   public render(ctx: CanvasRenderingContext2D) {
     if (!this.spritePrinter) return;
     const grid = this.gameState.mapStatus.fields;

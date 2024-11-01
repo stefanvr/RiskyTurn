@@ -22,6 +22,8 @@ export class LayerBackground implements Layer {
     this.gameFlowState.update(GameEventType.StartGame);
   }
 
+  public stopAnimation() {}
+
   public render(ctx: CanvasRenderingContext2D) {
     if (!this.button) {
       this.button = new Button(
