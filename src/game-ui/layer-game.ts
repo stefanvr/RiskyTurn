@@ -17,7 +17,7 @@ export class LayerGame implements LayerSprite<FieldType> {
     this.gameState = gameState;
     this.gameAppState = GameAppState;
     this.button = new Button(
-      new Vector(50, 100),
+      new Vector(100, 20),
       new Vector(400, 50),
       this.gameAppState.getAction(),
     );
@@ -38,8 +38,8 @@ export class LayerGame implements LayerSprite<FieldType> {
     ctx.font = `bold ${24}px monospace`;
     ctx.fillText(
       `Game Phase:${this.gameState.gameStatus.phase.toString()}`,
-      0,
-      40,
+      60,
+      100,
     );
 
     Object.entries(this.gameState.playersStatus).forEach(
@@ -47,8 +47,8 @@ export class LayerGame implements LayerSprite<FieldType> {
         ctx.fillStyle = +id === 1 ? "red" : "blue";
         ctx.fillText(
           `Player: Money-${playerStatus.money} Units-${playerStatus.placeableUnits} Domination-${playerStatus.mapDomination}`,
-          0,
-          40 + (24 * +id),
+          60,
+          100 + (24 * +id),
         );
       },
     );

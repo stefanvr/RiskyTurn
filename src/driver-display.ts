@@ -59,7 +59,6 @@ export class DriverDisplay<SPRITE_TYPE> implements AppEventsHandler {
 
   handlePointerStart(position: Vector): void {
     this.layers.forEach((layer) => {
-      console.log("start", position);
       layer.handlePointerStart(position);
     });
   }

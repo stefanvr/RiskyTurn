@@ -3,19 +3,24 @@ import { ButtonCallback } from "../display/ui-elements/button.ts";
 
 export enum GameAppStatePhases {
   startGame = "Start Game",
-  EnterActionPlayer1 = "Enter Action Player 1",
-  EnterActionPlayer2 = "Enter Action Player 2",
+  StartPlayer1 = "Player 1 get ready",
+  AdminPhasePlayer1 = "Admin Phase (1)",
+  EnterActionPlayer1 = "Ready (1)",
+  StartPlayer2 = "Player 2 get ready",
+  AdminPhasePlayer2 = "Admin Phase (2)",
+  EnterActionPlayer2 = "Ready (2)",
   ExecuteActions = "Execute Actions",
-  AdminPhase = "Admin Phase",
   endGame = "End Game",
 }
 
 export class GameAppState {
   status: GameAppStatePhases = GameAppStatePhases.startGame;
   gamestate: GameState;
+  publishNextState: () => void;
 
-  constructor(gamestate: GameState) {
+  constructor(gamestate: GameState, nextState: () => void) {
     this.gamestate = gamestate;
+    this.publishNextState = nextState;
   }
 
   public getAction(): ButtonCallback {
@@ -25,18 +30,37 @@ export class GameAppState {
     };
   }
 
+  demoRound = 0;
   public nextPhase() {
     console.log("nextPhase", this.status);
     switch (this.status) {
       case GameAppStatePhases.startGame:
+        {
+          this.status = GameAppStatePhases.StartPlayer1;
+        }
+        break;
+      case GameAppStatePhases.StartPlayer1:
+        {
+          this.status = GameAppStatePhases.AdminPhasePlayer1;
+        }
+        break;
+      case GameAppStatePhases.AdminPhasePlayer1:
         {
           this.status = GameAppStatePhases.EnterActionPlayer1;
         }
         break;
       case GameAppStatePhases.EnterActionPlayer1:
         {
-          this.gamestate.mapStatus.fields[0][0].units = 2;
-          this.gamestate.playersStatus[1].placeableUnits = 0;
+          this.status = GameAppStatePhases.StartPlayer2;
+        }
+        break;
+      case GameAppStatePhases.StartPlayer2:
+        {
+          this.status = GameAppStatePhases.AdminPhasePlayer2;
+        }
+        break;
+      case GameAppStatePhases.AdminPhasePlayer2:
+        {
           this.status = GameAppStatePhases.EnterActionPlayer2;
         }
         break;
@@ -47,24 +71,24 @@ export class GameAppState {
         break;
       case GameAppStatePhases.ExecuteActions:
         {
-          if (this.gamestate.gameStatus.phase === GamePhase.Placing) {
-            this.gamestate.gameStatus.phase = GamePhase.Playing;
-            this.status = GameAppStatePhases.EnterActionPlayer1;
-            return;
+          if (this.demoRound === 1) {
+            this.gamestate.gameStatus.phase = GamePhase.Finished;
+            this.status = GameAppStatePhases.endGame;
           }
-          this.gamestate.mapStatus.fields[0][0].units = 0;
-          this.gamestate.mapStatus.fields[0][1].units = 1;
-          this.gamestate.mapStatus.fields[0][1].playerId = 1;
-          this.gamestate.playersStatus[1].mapDomination = 100;
-          this.gamestate.gameStatus.phase = GamePhase.Finished;
-          this.status = GameAppStatePhases.AdminPhase;
+          else {
+            this.demoRound++;
+            this.status = GameAppStatePhases.StartPlayer1;
+          }
+
+
         }
         break;
-      case GameAppStatePhases.AdminPhase:
+      case GameAppStatePhases.endGame:
         {
-          this.status = GameAppStatePhases.endGame;
+          this.status = GameAppStatePhases.StartPlayer1;
         }
         break;
     }
+    this.publishNextState();
   }
 }

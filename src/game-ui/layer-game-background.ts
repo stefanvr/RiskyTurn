@@ -4,17 +4,16 @@ import type { Vector } from "../lib/vector.ts";
 export const TAG_LAYER_GAME_BACKGROUND = "game-background";
 
 export class LayerGameBackground implements Layer {
-
   tag: string = TAG_LAYER_GAME_BACKGROUND;
 
   animationRef?: number;
   ctx?: CanvasRenderingContext2D;
 
-  xStart:number = 0;
-  yStart:number = 0;
-  xEnd:number  = 1;
-  yEnd:number = 1;
-  radius:number = 1;
+  xStart: number = 0;
+  yStart: number = 0;
+  xEnd: number = 1;
+  yEnd: number = 1;
+  radius: number = 1;
 
   public resize(ctx: CanvasRenderingContext2D): void {
     this.calculateBackgroundCoordinates(ctx);
@@ -50,30 +49,32 @@ export class LayerGameBackground implements Layer {
     if (!this.ctx) return;
 
     // Create radial gradient
-  const gradient = this.ctx.createRadialGradient(
-    this.xStart, this.yStart,0,
-    this.xEnd, this.yEnd, this.radius,
-  );
-  
-  // Calculate pulsation based on time
-  const pulsation = Math.sin(time / 1500) * 0.5 + 0.5;
+    const gradient = this.ctx.createRadialGradient(
+      this.xStart,
+      this.yStart,
+      0,
+      this.xEnd,
+      this.yEnd,
+      this.radius,
+    );
 
-  // Add color stops with pulsating effect
-  gradient.addColorStop(0, "black");
-  gradient.addColorStop(
-    0.4,
-    `rgb(${139 + pulsation * 50}, ${64 + pulsation * 50}, 0)`,
-  );
-  gradient.addColorStop(1, "black");
+    // Calculate pulsation based on time
+    const pulsation = Math.sin(time / 1500) * 0.5 + 0.5;
 
-  // Fill canvas with gradient
+    // Add color stops with pulsating effect
+    gradient.addColorStop(0, "black");
+    gradient.addColorStop(
+      0.4,
+      `rgb(${139 + pulsation * 50}, ${64 + pulsation * 50}, 0)`,
+    );
+    gradient.addColorStop(1, "black");
+
+    // Fill canvas with gradient
     this.ctx.fillStyle = gradient;
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-
   }
 
   private calculateBackgroundCoordinates(ctx: CanvasRenderingContext2D) {
-    console.log("calculateBackgroundCoordinates");
     let r: number;
     let xo: number;
     let yo: number;
@@ -81,8 +82,7 @@ export class LayerGameBackground implements Layer {
       r = ctx.canvas.width / 2;
       xo = 0;
       yo = (ctx.canvas.height - ctx.canvas.width) / 2;
-    }
-    else {
+    } else {
       r = ctx.canvas.height / 2;
       xo = (ctx.canvas.width - ctx.canvas.height) / 2;
       yo = 0;
@@ -95,8 +95,7 @@ export class LayerGameBackground implements Layer {
     this.radius = r;
   }
 
-  handlePointerMove(position: Vector): void {}
-  handlePointerEnd(position: Vector): void {}
-  handlePointerStart(position: Vector): void {}
+  handlePointerMove(_: Vector): void {}
+  handlePointerEnd(_: Vector): void {}
+  handlePointerStart(_: Vector): void {}
 }
-
