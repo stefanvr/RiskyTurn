@@ -4,6 +4,8 @@ import { Vector } from "../lib/vector.ts";
 import { FieldType } from "../game/game-elements.ts";
 import { GameAppState } from "./game-app-state.ts";
 import { Button } from "../display/ui-elements/button.ts";
+import { UiField } from "../display/ui-elements/field.ts";
+import type { UiSpriteElement } from "../display/ui-elements/ui-elements.ts";
 
 export const TAG_LAYER_GAME = "game";
 export class LayerGame implements LayerSprite<FieldType> {
@@ -12,7 +14,7 @@ export class LayerGame implements LayerSprite<FieldType> {
   gameState: GameState;
   gameAppState: GameAppState;
   button: Button;
-
+  elements: UiSpriteElement[][] | null = null;
   constructor(gameState: GameState, GameAppState: GameAppState) {
     this.gameState = gameState;
     this.gameAppState = GameAppState;
@@ -25,14 +27,13 @@ export class LayerGame implements LayerSprite<FieldType> {
 
   public stopAnimation() {}
 
+  public resize(ctx: CanvasRenderingContext2D): void {
+    this.setupBoard(ctx);
+  }
+
   public render(ctx: CanvasRenderingContext2D) {
     if (!this.spritePrinter) return;
-    const grid = this.gameState.mapStatus.fields;
-    const xFieldLength = grid[0].length;
-    const yFieldLength = grid.length;
-
-    const xOffset = (ctx.canvas.width - (220 * xFieldLength)) / 2;
-    const yOffset = (ctx.canvas.height - (220 * yFieldLength)) / 2;
+    if (!this.elements) this.setupBoard(ctx);
 
     ctx.fillStyle = "gray";
     ctx.font = `bold ${24}px monospace`;
@@ -41,55 +42,36 @@ export class LayerGame implements LayerSprite<FieldType> {
       60,
       100,
     );
+    this.button.Draw(ctx);
+    this.elements!.forEach((e) => {
+      e.forEach((e) => e.draw(ctx, this.spritePrinter!));
+    });
+  }
 
-    Object.entries(this.gameState.playersStatus).forEach(
-      ([id, playerStatus]) => {
-        ctx.fillStyle = +id === 1 ? "red" : "blue";
-        ctx.fillText(
-          `Player: Money-${playerStatus.money} Units-${playerStatus.placeableUnits} Domination-${playerStatus.mapDomination}`,
-          60,
-          100 + (24 * +id),
-        );
-      },
-    );
+  setupBoard(ctx: CanvasRenderingContext2D) {
+    const grid = this.gameState.mapStatus.fields;
+    const xFieldLength = grid[0].length;
+    const yFieldLength = grid.length;
+    const xOffset = (ctx.canvas.width - (220 * xFieldLength)) / 2;
+    const yOffset = (ctx.canvas.height - (220 * yFieldLength)) / 2;
+    const elements: UiSpriteElement[][] = [];
 
     for (let y = 0; y < yFieldLength; y++) {
+      const row: UiSpriteElement[] = [];
       for (let x = 0; x < xFieldLength; x++) {
-        const t = grid[y][x];
-        if (t !== null) {
-          this.spritePrinter.drawSpriteType(
-            ctx,
-            new Vector(
-              xOffset + (220 * x),
-              yOffset + (220 * y),
-            ),
-            t.fieldType,
-          );
-
-          if (this.gameState.rules.fields[t.fieldType].live) {
-            if (t.playerId !== null) {
-              ctx.fillStyle = t.playerId === 1 ? "red" : "blue";
-              ctx.fillRect(
-                xOffset + (220 * x) + 105,
-                yOffset + (220 * y) + 105,
-                10,
-                10,
-              );
-            } else {
-              ctx.fillStyle = "gray";
-            }
-
-            const text = `${t.units}-${t.unitsUnderConstruction}`;
-            ctx.fillText(
-              text,
-              xOffset + (220 * x) + 110 - (ctx.measureText(text).width / 2),
-              yOffset + (220 * y) + 110 + 35,
-            );
-          }
-        }
+        row.push(
+          new UiField(
+            grid[y][x],
+            new Vector(xOffset + (x * 220), yOffset + (y * 220)),
+            new Vector(220, 220),
+            this.gameState.rules,
+          ),
+        );
       }
+      elements.push(row);
     }
-    this.button.Draw(ctx);
+
+    this.elements = elements;
   }
 
   handlePointerStart(_: Vector): void {
@@ -97,7 +79,8 @@ export class LayerGame implements LayerSprite<FieldType> {
 
   handlePointerEnd(position: Vector): void {
     if (this.button?.collision(position)) {
-      this.button.Action();
+      this.button.action();
+      this.button?.ClearMark();
     }
   }
 

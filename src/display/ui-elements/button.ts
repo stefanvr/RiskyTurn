@@ -1,20 +1,12 @@
 import type { Vector } from "../../lib/vector.ts";
-
-type Area = { start: Vector; end: Vector };
-
-function boxCollision(area: Area, p: Vector): boolean {
-  return p.x >= area.start.x &&
-    p.y >= area.start.y &&
-    p.x <= area.end.x &&
-    p.y <= area.end.y;
-}
+import { boxCollision, UIElement } from "./ui-elements.ts";
 
 export type ButtonCallback = {
   text: () => string;
   action: () => void;
 };
 
-export class Button {
+export class Button implements UIElement {
   start: Vector;
   end: Vector;
   size: Vector;
@@ -32,7 +24,7 @@ export class Button {
     this.callback = callback;
   }
 
-  public Action() {
+  public action() {
     this.callback.action();
   }
 

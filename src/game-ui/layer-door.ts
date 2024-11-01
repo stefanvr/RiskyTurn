@@ -3,6 +3,7 @@ import type { Vector } from "../lib/vector.ts";
 
 export const TAG_LAYER_DOOR = "door";
 export class LayerDoor implements Layer {
+
   tag = "door";
 
   public isOpen = false;
@@ -17,6 +18,9 @@ export class LayerDoor implements Layer {
   ctx?: CanvasRenderingContext2D;
 
   stopAnimation(): void {
+  }
+
+  resize(ctx: CanvasRenderingContext2D): void {
   }
 
   render(ctx: CanvasRenderingContext2D): void {

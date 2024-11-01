@@ -14,6 +14,7 @@ export interface Layer extends AppEventsHandler {
 
   stopAnimation(): void;
   render(ctx: CanvasRenderingContext2D): void;
+  resize(ctx: CanvasRenderingContext2D): void;
 }
 
 export interface LayerSprite<SPRITE_TYPE> extends Layer {

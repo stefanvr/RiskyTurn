@@ -22,6 +22,9 @@ export class LayerBackground implements Layer {
     this.gameFlowState.update(GameEventType.StartGame);
   }
 
+  resize(_: CanvasRenderingContext2D): void {
+  }
+
   public stopAnimation() {}
 
   public render(ctx: CanvasRenderingContext2D) {
@@ -54,7 +57,7 @@ export class LayerBackground implements Layer {
 
   handlePointerEnd(position: Vector): void {
     if (this.button?.collision(position)) {
-      this.button.Action();
+      this.button.action();
     }
   }
 

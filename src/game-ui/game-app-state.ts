@@ -74,13 +74,10 @@ export class GameAppState {
           if (this.demoRound === 1) {
             this.gamestate.gameStatus.phase = GamePhase.Finished;
             this.status = GameAppStatePhases.endGame;
-          }
-          else {
+          } else {
             this.demoRound++;
             this.status = GameAppStatePhases.StartPlayer1;
           }
-
-
         }
         break;
       case GameAppStatePhases.endGame:
