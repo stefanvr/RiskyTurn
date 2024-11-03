@@ -9,6 +9,10 @@ export interface UIElement {
   ClearMark(): void;
 }
 
+export interface UiFormElement extends UIElement {
+  Draw(ctx: CanvasRenderingContext2D): void;
+}
+
 export interface UiSpriteElement extends UIElement {
   draw(ctx: CanvasRenderingContext2D, printer: ISpritePrinter<FieldType>): void;
 }

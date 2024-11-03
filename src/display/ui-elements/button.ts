@@ -1,12 +1,13 @@
 import type { Vector } from "../../lib/vector.ts";
-import { boxCollision, UIElement } from "./ui-elements.ts";
+import { boxCollision, UiFormElement } from "./ui-elements.ts";
 
 export type ButtonCallback = {
   text: () => string;
   action: () => void;
+  enabled: () => boolean;
 };
 
-export class Button implements UIElement {
+export class Button implements UiFormElement {
   start: Vector;
   end: Vector;
   size: Vector;
@@ -65,12 +66,26 @@ export class Button implements UIElement {
       this.end.x,
       this.end.y,
     );
-    pressedGradient.addColorStop(0, "#8B0000"); // Dark red
-    pressedGradient.addColorStop(1, this.marked ? "#FFA500" : "#FF4500"); // Flame red
+
+    if (!this.callback.enabled()) {
+      pressedGradient.addColorStop(0, "#400000");
+      pressedGradient.addColorStop(1, "#300000");
+    } else {
+      pressedGradient.addColorStop(0, "#8B0000"); // Dark red
+      pressedGradient.addColorStop(1, this.marked ? "#FFA500" : "#FF4500"); // Flame red
+    }
     ctx.fillStyle = pressedGradient;
     roundRect(this.start.x, this.start.y, this.size.x, this.size.y, 15);
     ctx.fill();
-    ctx.fillStyle = "#FFA500"; // Orange
+
+    // Highlight edge for disabled buttons
+    if (!this.callback.enabled()) {
+      ctx.strokeStyle = "rgba(255, 0, 0, 0.3)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = this.callback.enabled() ? "#FFA500" : "#653d00"; // Orange
     ctx.font = `bold ${24}px monospace`;
     const text = this.callback.text();
     ctx.fillText(

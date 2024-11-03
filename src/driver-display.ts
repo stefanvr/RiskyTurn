@@ -20,6 +20,10 @@ export interface Layer extends AppEventsHandler {
 export interface LayerSprite<SPRITE_TYPE> extends Layer {
   spritePrinter: ISpritePrinter<SPRITE_TYPE> | null;
 }
+export interface Modal extends AppEventsHandler {
+  render(ctx: CanvasRenderingContext2D): void;
+  onClose: (() => void) | null;
+}
 
 export class DriverDisplay<SPRITE_TYPE> implements AppEventsHandler {
   ctx: CanvasRenderingContext2D;
@@ -58,22 +62,45 @@ export class DriverDisplay<SPRITE_TYPE> implements AppEventsHandler {
     this.layers = this.layers.filter((layer) => layer.tag !== tag);
   }
 
+  modal: Modal | null = null;
+  public showModal(modal: Modal) {
+    this.modal = modal;
+    this.modal.onClose = this.modalOnClose.bind(this);
+  }
+
+  private modalOnClose() {
+    console.log("Modal closed");
+    this.modal = null;
+  }
+
   handlePointerStart(position: Vector): void {
-    this.layers.forEach((layer) => {
-      layer.handlePointerStart(position);
-    });
+    if (this.modal) {
+      this.modal.handlePointerStart(position);
+    } else {
+      this.layers.forEach((layer) => {
+        layer.handlePointerStart(position);
+      });
+    }
   }
 
   handlePointerEnd(position: Vector): void {
-    this.layers.forEach((layer) => {
-      layer.handlePointerEnd(position);
-    });
+    if (this.modal) {
+      this.modal.handlePointerEnd(position);
+    } else {
+      this.layers.forEach((layer) => {
+        layer.handlePointerEnd(position);
+      });
+    }
   }
 
   handlePointerMove(position: Vector): void {
-    this.layers.forEach((layer) => {
-      layer.handlePointerMove(position);
-    });
+    if (this.modal) {
+      this.modal.handlePointerMove(position);
+    } else {
+      this.layers.forEach((layer) => {
+        layer.handlePointerMove(position);
+      });
+    }
   }
 
   private initResizeHandling(): void {
@@ -100,5 +127,8 @@ export class DriverDisplay<SPRITE_TYPE> implements AppEventsHandler {
     this.layers.forEach((layer) => {
       layer.render(this.ctx);
     });
+    if (this.modal) {
+      this.modal.render(this.ctx);
+    }
   }
 }
