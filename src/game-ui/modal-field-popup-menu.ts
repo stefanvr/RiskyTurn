@@ -2,9 +2,7 @@ import { Modal } from "../driver-display.ts";
 import { Vector } from "../lib/vector.ts";
 import { Button } from "../display/ui-elements/button.ts";
 import { ButtonX } from "../display/ui-elements/button-x.ts";
-import {
-  UiFormElement,
-} from "../display/ui-elements/ui-elements.ts";
+import { UiFormElement } from "../display/ui-elements/ui-elements.ts";
 
 export type MenuItem = {
   text: string;

@@ -1,5 +1,8 @@
 import { GamePhase, GameState } from "../game/game-state.ts";
 import { ButtonCallback } from "../display/ui-elements/button.ts";
+import { playGameTurnAction } from "../game/turn/game-turn-play-action.ts";
+import { PlayerAction } from "../game/interaction/game-actions.ts";
+import { processGameTurn } from "../game/turn-service/game-turn-service.ts";
 
 export enum GameAppStatePhases {
   startGame = "Start Game",
@@ -10,6 +13,7 @@ export enum GameAppStatePhases {
   AdminPhasePlayer2 = "Admin Phase (2)",
   EnterActionPlayer2 = "Ready (2)",
   ExecuteActions = "Execute Actions",
+  showResults = "Game over",
   endGame = "End Game",
 }
 
@@ -18,6 +22,7 @@ export class GameAppState {
   gamestate: GameState;
   publishNextState: () => void;
   playerId: number = 0;
+  actions: PlayerAction[] = [];
 
   constructor(gamestate: GameState, nextState: () => void) {
     this.gamestate = gamestate;
@@ -47,6 +52,7 @@ export class GameAppState {
         {
           this.status = GameAppStatePhases.AdminPhasePlayer1;
           this.playerId = 1;
+          console.log(this.gamestate.mapStatus.fields);
         }
         break;
       case GameAppStatePhases.AdminPhasePlayer1:
@@ -77,13 +83,17 @@ export class GameAppState {
         break;
       case GameAppStatePhases.ExecuteActions:
         {
-          if (this.demoRound === 1) {
-            this.gamestate.gameStatus.phase = GamePhase.Finished;
-            this.status = GameAppStatePhases.endGame;
-          } else {
-            this.demoRound++;
-            this.status = GameAppStatePhases.StartPlayer1;
-          }
+          this.gamestate = processGameTurn(this.gamestate, this.actions);
+          this.actions = [];
+          console.log(this.gamestate);
+          this.status = this.gamestate.gameStatus.phase === GamePhase.Finished
+            ? GameAppStatePhases.showResults
+            : GameAppStatePhases.StartPlayer1;
+        }
+        break;
+      case GameAppStatePhases.showResults:
+        {
+          this.status = GameAppStatePhases.endGame;
         }
         break;
       case GameAppStatePhases.endGame:
@@ -93,5 +103,10 @@ export class GameAppState {
         break;
     }
     this.publishNextState();
+  }
+
+  public enterPLayerAction(action: PlayerAction) {
+    this.actions.push(action);
+    playGameTurnAction(this.gamestate, action);
   }
 }

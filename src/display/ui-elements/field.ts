@@ -9,7 +9,7 @@ export class UiField implements UiSpriteElement {
   start: Vector;
   end: Vector;
   size: Vector;
-  fieldStatus: FieldStatus;
+  field: { x: number; y: number; status: FieldStatus };
   live: boolean;
   actionHandler: () => void;
   markerHandler: () => boolean;
@@ -17,7 +17,7 @@ export class UiField implements UiSpriteElement {
   marked: boolean = false;
 
   constructor(
-    f: FieldStatus,
+    f: { x: number; y: number; status: FieldStatus },
     start: Vector,
     size: Vector,
     rules: GameRules,
@@ -27,8 +27,8 @@ export class UiField implements UiSpriteElement {
     this.start = start;
     this.size = size;
     this.end = start.add(size);
-    this.fieldStatus = f;
-    this.live = rules.fields[f.fieldType].live;
+    this.field = f;
+    this.live = rules.fields[f.status.fieldType].live;
     this.actionHandler = actionHandler;
     this.markerHandler = markebleHandler;
   }
@@ -55,12 +55,12 @@ export class UiField implements UiSpriteElement {
     ctx: CanvasRenderingContext2D,
     printer: ISpritePrinter<FieldType>,
   ): void {
-    const f = this.fieldStatus;
+    const f = this.field.status;
 
     printer.drawSpriteType(
       ctx,
       this.start,
-      this.fieldStatus.fieldType,
+      this.field.status.fieldType,
     );
 
     if (this.live) {

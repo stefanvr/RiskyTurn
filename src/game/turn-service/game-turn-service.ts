@@ -19,14 +19,20 @@ export function processGameTurn(
   beginState: GameState,
   actions: TurnActions,
 ): GameState {
-  const endState = structuredClone(beginState);
+  //const endState = structuredClone(beginState); // temp disable clone until result event processing is coded
+  const endState = beginState;
 
   actions.forEach((action) => {
     validateGameTurnAction(endState, action);
     const event = playGameTurnAction(endState, action);
     if (event) playGameTurnEvent(endState, event); // purchase & move
   });
-  battle(endState, actions.filter((a) => a.type === PlayerActionType.Attack));
+  battle(
+    endState,
+    actions.filter((a) => {
+      return a.type === PlayerActionType.Attack;
+    }),
+  );
 
   updatePlayerStats(endState);
   updateGameStats(endState);
