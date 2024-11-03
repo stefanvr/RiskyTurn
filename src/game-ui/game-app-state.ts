@@ -17,6 +17,7 @@ export class GameAppState {
   status: GameAppStatePhases = GameAppStatePhases.startGame;
   gamestate: GameState;
   publishNextState: () => void;
+  playerId: number = 0;
 
   constructor(gamestate: GameState, nextState: () => void) {
     this.gamestate = gamestate;
@@ -27,6 +28,9 @@ export class GameAppState {
     return {
       text: () => this.status.toString(),
       action: () => this.nextPhase(),
+      enabled: () => {
+        return true;
+      },
     };
   }
 
@@ -42,6 +46,7 @@ export class GameAppState {
       case GameAppStatePhases.StartPlayer1:
         {
           this.status = GameAppStatePhases.AdminPhasePlayer1;
+          this.playerId = 1;
         }
         break;
       case GameAppStatePhases.AdminPhasePlayer1:
@@ -52,6 +57,7 @@ export class GameAppState {
       case GameAppStatePhases.EnterActionPlayer1:
         {
           this.status = GameAppStatePhases.StartPlayer2;
+          this.playerId = 2;
         }
         break;
       case GameAppStatePhases.StartPlayer2:

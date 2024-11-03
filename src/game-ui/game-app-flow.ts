@@ -2,7 +2,7 @@ import { Sound } from "../audio/audio-config.ts";
 import { DriverDisplay } from "../driver-display.ts";
 import { IDriverAudio } from "../driver-audio.ts";
 import { LayerBackground, TAG_LAYER_BACKGROUND } from "./layer-background.ts";
-import { GameEventType } from "./game-flow-events.ts";
+import { type GameEvent, GameEventType } from "./game-flow-events.ts";
 
 import {
   LayerGameBackground,
@@ -36,18 +36,23 @@ export class GameAppFlow {
   }
 
   public NextState() {
-    this.update(GameEventType.NextState);
+    this.update({ type: GameEventType.NextState });
   }
 
-  public update(event: GameEventType) {
-    switch (event) {
+  public update(event: GameEvent) {
+    switch (event.type) {
+      case GameEventType.ShowModal:
+        {
+          this.display.showModal(event.model);
+        }
+        break;
       case GameEventType.NextState:
         {
           if (this.state.status === GameAppStatePhases.startGame) {
-            this.update(GameEventType.StartGame);
+            this.update({ type: GameEventType.StartGame });
           }
           if (this.state.status === GameAppStatePhases.endGame) {
-            this.update(GameEventType.GameFinished);
+            this.update({ type: GameEventType.GameFinished });
             this.state = new GameAppState(
               minimalGame,
               this.NextState.bind(this),
@@ -73,7 +78,9 @@ export class GameAppFlow {
           this.display.addLayer(new LayerGameBackground());
           this.display.removeLayer(TAG_LAYER_BACKGROUND);
           this.display.removeLayer(TAG_LAYER_DOOR);
-          this.display.addSpriteLayer(new LayerGame(minimalGame, this.state));
+          this.display.addSpriteLayer(
+            new LayerGame(minimalGame, this.state, this),
+          );
           this.display.addLayer(this.door);
           this.door.toggle();
           this.audio.playSoundEffect(Sound.Open);

@@ -11,24 +11,34 @@ export class UiField implements UiSpriteElement {
   size: Vector;
   fieldStatus: FieldStatus;
   live: boolean;
+  actionHandler: () => void;
+  markerHandler: () => boolean;
+
+  marked: boolean = false;
 
   constructor(
     f: FieldStatus,
     start: Vector,
     size: Vector,
     rules: GameRules,
+    actionHandler: () => void,
+    markebleHandler: () => boolean,
   ) {
     this.start = start;
     this.size = size;
     this.end = start.add(size);
     this.fieldStatus = f;
     this.live = rules.fields[f.fieldType].live;
+    this.actionHandler = actionHandler;
+    this.markerHandler = markebleHandler;
   }
 
   ClearMark(): void {
+    this.marked = false;
   }
 
   Mark(): void {
+    this.marked = this.markerHandler();
   }
 
   collision(p: Vector): boolean {
@@ -36,6 +46,9 @@ export class UiField implements UiSpriteElement {
   }
 
   action(): void {
+    if (this.marked) {
+      this.actionHandler();
+    }
   }
 
   public draw(
@@ -61,6 +74,10 @@ export class UiField implements UiSpriteElement {
         );
       } else {
         ctx.fillStyle = "gray";
+      }
+
+      if (this.marked) {
+        ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
       }
 
       const text = `${f.units}-${f.unitsUnderConstruction}`;

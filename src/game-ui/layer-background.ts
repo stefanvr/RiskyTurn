@@ -19,7 +19,7 @@ export class LayerBackground implements Layer {
   }
 
   public action() {
-    this.gameFlowState.update(GameEventType.StartGame);
+    this.gameFlowState.update({ type: GameEventType.StartGame });
   }
 
   resize(_: CanvasRenderingContext2D): void {
@@ -35,6 +35,9 @@ export class LayerBackground implements Layer {
         {
           text: () => "Start",
           action: this.action.bind(this),
+          enabled: () => {
+            return true;
+          },
         },
       );
     }
