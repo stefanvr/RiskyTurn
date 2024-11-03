@@ -6,12 +6,12 @@ parts of the app.
 ## Game App flow
 
 - Minimal flow
-  - [ ] Start Menu
-  - [ ] Player status
-  - [ ] Game status
-  - [ ] Switch Player turns
-  - [ ] Switch Player actions
-  - [ ] Game finished
+  - [x] Start Menu
+  - [x] Player status
+  - [x] Game status
+  - [x] Switch Player turns
+  - [x] Switch Player actions
+  - [x] Game finished
 
 - Other
   - [ ] Game config
@@ -25,9 +25,9 @@ parts of the app.
 
 ## Display
 
-- [ ] Animation
+- [x] Animation
 - [ ] Screen transition
-- [ ] Modal
+- [x] Modal
 
 ## Audio
 
@@ -63,3 +63,4 @@ parts of the app.
 - Code caveats
   - [ ] Location validate tests
   - [ ] publish change events in processor
+  - [ ] Popup modal refactor for location
